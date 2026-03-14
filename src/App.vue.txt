@@ -1,0 +1,42 @@
+<template>
+  <!-- Loading sementara -->
+  <div v-if="checkingAuth" class="w-full h-screen flex items-center justify-center">
+    <span class="text-gray-500 text-sm">Memuat...</span>
+  </div>
+
+  <Login v-else-if="!loggedIn && !proseslogin" />
+  <Isiformawal v-else-if="loggedIn && !profilLengkap" />
+  <RouterView v-else />
+</template>
+
+<script setup>
+import { ref, onMounted } from "vue"
+import { RouterView } from "vue-router"
+import Login from "./pages/autentifikasi/login.vue"
+import Isiformawal from "./pages/autentifikasi/Isiformawal.vue"
+import api from "@/services/api"
+
+const loggedIn = ref(false)
+const proseslogin = ref(0)
+const profilLengkap = ref(true)
+
+const checkingAuth = ref(true)
+
+const urlParams = new URLSearchParams(window.location.search)
+if (urlParams.get("token")) {
+  proseslogin.value = 1
+}
+
+onMounted(async () => {
+  try {
+    const res = await api.get("/me")
+    loggedIn.value = true
+    profilLengkap.value = !!res.data.profil_lengkap
+  } catch (err) {
+    loggedIn.value = false
+    profilLengkap.value = true
+  } finally {
+    checkingAuth.value = false
+  }
+})
+</script>

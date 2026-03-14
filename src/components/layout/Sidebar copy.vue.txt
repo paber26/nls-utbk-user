@@ -1,0 +1,106 @@
+<template>
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="w-64 bg-slate-900 text-slate-200 flex flex-col">
+    <!-- Logo -->
+    <div class="px-6 py-5 text-lg font-semibold border-b border-slate-800">Next Level Study</div>
+
+    <!-- User Info -->
+    <div class="px-6 py-4 border-b border-slate-800">
+      <p class="text-xs text-slate-400">Siswa</p>
+      <p class="font-medium">
+        {{ user?.nama_lengkap || user?.name || "Memuat..." }}
+      </p>
+      <p class="text-xs text-slate-400">{{ user?.sekolah || "-" }} • Kelas {{ user?.kelas || "-" }}</p>
+    </div>
+
+    <!-- Menu -->
+    <nav class="flex-1 px-3 py-4 space-y-1 text-sm">
+      <RouterLink
+        to="/"
+        class="flex items-center gap-3 px-4 py-3 rounded-lg transition"
+        :class="$route.path === '/' ? 'bg-slate-800 text-white' : 'hover:bg-slate-800 text-slate-300'"
+      >
+        🏠
+        <span>Beranda</span>
+      </RouterLink>
+
+      <RouterLink
+        to="/tryout"
+        class="flex items-center gap-3 px-4 py-3 rounded-lg transition"
+        :class="isTryoutRoute ? 'bg-slate-800 text-white' : 'hover:bg-slate-800 text-slate-300'"
+      >
+        📝
+        <span>Tryout</span>
+      </RouterLink>
+
+      <RouterLink
+        to="/fokus-utbk"
+        class="flex items-center gap-3 px-4 py-3 rounded-lg transition"
+        :class="$route.path === '/fokus-utbk' ? 'bg-slate-800 text-white' : 'hover:bg-slate-800 text-slate-300'"
+      >
+        📘
+        <span>Fokus UTBK</span>
+      </RouterLink>
+
+      <RouterLink
+        to="/fokus-tka"
+        class="flex items-center gap-3 px-4 py-3 rounded-lg transition"
+        :class="$route.path === '/fokus-tka' ? 'bg-slate-800 text-white' : 'hover:bg-slate-800 text-slate-300'"
+      >
+        🎯
+        <span>Fokus TKA</span>
+      </RouterLink>
+
+      <RouterLink
+        to="/peringkat"
+        class="flex items-center gap-3 px-4 py-3 rounded-lg transition"
+        :class="$route.path === '/peringkat' ? 'bg-slate-800 text-white' : 'hover:bg-slate-800 text-slate-300'"
+      >
+        🏆
+        <span>Peringkat</span>
+      </RouterLink>
+    </nav>
+
+    <!-- Logout -->
+    <div class="px-3 py-4 border-t border-slate-800">
+      <button
+        @click="logout"
+        class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-red-400 hover:bg-red-500/10 transition"
+      >
+        🚪
+        <span>Logout</span>
+      </button>
+    </div>
+  </aside>
+</template>
+
+<script setup>
+import { useRoute } from "vue-router"
+import { computed, ref, onMounted } from "vue"
+import api from "@/services/api"
+
+const route = useRoute()
+
+const isTryoutRoute = computed(() => route.path.startsWith("/tryout"))
+
+const user = ref(null)
+
+const loadUser = async () => {
+  try {
+    const res = await api.get("/me")
+    user.value = res.data
+    console.log("Data user berhasil dimuat:", user.value)
+  } catch (error) {
+    console.error("Gagal memuat data user:", error)
+  }
+}
+
+onMounted(() => {
+  loadUser()
+})
+
+const logout = () => {
+  localStorage.removeItem("auth_token")
+  window.location.href = "/login"
+}
+</script>
