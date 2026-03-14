@@ -1,11 +1,11 @@
 <template>
-  <div class="min-h-screen bg-slate-100 flex select-none" @copy.prevent @cut.prevent @contextmenu.prevent>
+  <div class="min-h-screen bg-bgsoft flex select-none" @copy.prevent @cut.prevent @contextmenu.prevent>
     <!-- Sidebar (optional placeholder) -->
     <aside
       class="bg-white border-r w-64 flex-shrink-0 fixed inset-y-0 left-0 z-40 transform transition-transform duration-300 lg:static lg:translate-x-0"
       :class="showDaftarSoal ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'"
     >
-      <div class="p-4 font-bold text-indigo-600">Daftar Soal</div>
+      <div class="p-4 font-bold text-[#1D546D]">Daftar Soal</div>
       <div class="p-4 grid grid-cols-5 gap-2">
         <button
           v-for="n in totalSoal"
@@ -46,7 +46,7 @@
         <div class="flex items-center gap-4">
           <span class="px-4 py-2 rounded-full border border-red-400 text-red-500">Sisa Waktu: {{ timer }}</span>
 
-          <button class="px-4 py-2 bg-blue-500 text-white rounded lg:hidden" @click="showDaftarSoal = !showDaftarSoal">
+          <button class="px-4 py-2 bg-[#1D546D] text-white rounded lg:hidden" @click="showDaftarSoal = !showDaftarSoal">
             Daftar Soal
           </button>
 
@@ -62,7 +62,7 @@
       <!-- Question Card -->
       <div class="bg-white rounded-xl p-6 border">
         <div v-if="isLoadingQuestion" class="flex justify-center items-center py-10">
-          <div class="animate-spin rounded-full h-8 w-8 border-4 border-indigo-500 border-t-transparent"></div>
+          <div class="animate-spin rounded-full h-8 w-8 border-4 border-[#1D546D] border-t-transparent"></div>
         </div>
         <div v-else ref="contentContainer">
           <div ref="soalContainer" :class="fontSize" class="leading-relaxed mb-6" v-html="soalText"></div>
@@ -80,12 +80,12 @@
                   :name="'soal-' + currentNumber"
                   v-model="singleAnswer"
                   :value="opt.key"
-                  class="mt-1 accent-indigo-600"
+                  class="mt-1 accent-[#1D546D]"
                   @change="onAnswerChange"
                 />
                 <div class="flex items-start gap-3 w-full">
                   <div
-                    class="w-8 h-8 flex items-center justify-center rounded-full bg-indigo-100 text-indigo-600 font-semibold"
+                    class="w-8 h-8 flex items-center justify-center rounded-full bg-[#F3F4F4] text-[#1D546D] font-semibold"
                   >
                     {{ String.fromCharCode(65 + index) }}
                   </div>
@@ -108,11 +108,11 @@
                   :value="opt.key"
                   v-model="answersMap[currentNumber]"
                   @change="onAnswerChange"
-                  class="mt-1 accent-indigo-600"
+                  class="mt-1 accent-[#1D546D]"
                 />
                 <div class="flex items-start gap-3 w-full">
                   <div
-                    class="w-8 h-8 flex items-center justify-center rounded-full bg-indigo-100 text-indigo-600 font-semibold"
+                    class="w-8 h-8 flex items-center justify-center rounded-full bg-[#F3F4F4] text-[#1D546D] font-semibold"
                   >
                     {{ String.fromCharCode(65 + index) }}
                   </div>
@@ -131,7 +131,7 @@
             >
               <div class="flex items-start gap-4">
                 <div
-                  class="w-8 h-8 flex items-center justify-center rounded-full bg-indigo-100 text-indigo-600 font-semibold"
+                  class="w-8 h-8 flex items-center justify-center rounded-full bg-[#F3F4F4] text-[#1D546D] font-semibold"
                 >
                   {{ String.fromCharCode(65 + index) }}
                 </div>
@@ -205,7 +205,7 @@
 
             <button
               v-if="currentNumber < totalSoal"
-              class="absolute right-0 px-6 py-2 bg-indigo-500 text-white rounded"
+              class="absolute right-0 px-6 py-2 bg-[#1D546D] text-white rounded"
               @click="nextQuestion"
             >
               Soal berikutnya
@@ -596,7 +596,7 @@ function toggleFlag() {
 }
 
 function statusClass(n) {
-  if (currentNumber.value === n) return "bg-blue-500 text-white"
+  if (currentNumber.value === n) return "bg-[#1D546D] text-white"
   if (flagged.value[n]) return "bg-yellow-400 text-white"
   if (answered.value[n]) return "bg-green-500 text-white"
   if (opened.value[n]) return "bg-black text-white"

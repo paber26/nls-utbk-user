@@ -2,16 +2,16 @@
   <!-- Loading sementara -->
   <div
     v-if="checkingAuth"
-    class="w-full h-screen flex flex-col items-center justify-center bg-gradient-to-br from-indigo-100 via-white to-indigo-50"
+    class="w-full h-screen flex flex-col items-center justify-center bg-gradient-to-br from-[#F3F4F4] via-white to-[#5F9598]/12"
   >
     <div class="flex flex-col items-center">
       <div class="relative">
-        <div class="w-20 h-20 rounded-full bg-indigo-100 flex items-center justify-center shadow-inner">
-          <div class="w-10 h-10 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
+        <div class="w-20 h-20 rounded-full bg-white flex items-center justify-center shadow-inner">
+          <div class="w-10 h-10 border-4 border-[#1D546D] border-t-transparent rounded-full animate-spin"></div>
         </div>
       </div>
 
-      <h2 class="mt-8 text-xl font-semibold text-indigo-700 tracking-wide">Menyiapkan Dashboard Anda</h2>
+      <h2 class="mt-8 text-xl font-semibold text-[#061E29] tracking-wide">Menyiapkan Dashboard Anda</h2>
 
       <p class="mt-2 text-sm text-slate-500 text-center max-w-xs">
         Sistem sedang memeriksa sesi login dan memuat data pengguna. Mohon tunggu sebentar...
@@ -19,9 +19,9 @@
     </div>
   </div>
 
-  <!-- <Login v-else-if="!loggedIn && !proseslogin" />
+  <Login v-else-if="!loggedIn && !proseslogin" />
   <Isiformawal v-else-if="loggedIn && !profilLengkap" />
-  <EventInfo v-else-if="loggedIn && profilLengkap && !isEventRegistered" /> -->
+  <EventInfo v-else-if="loggedIn && profilLengkap && !isEventRegistered" />
   <RouterView v-else />
 </template>
 

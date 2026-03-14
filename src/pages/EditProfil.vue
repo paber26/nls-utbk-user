@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-slate-100 font-poppins">
+  <div class="bg-bgsoft font-poppins">
     <div class="flex min-h-screen">
       <Sidebar />
 
@@ -11,7 +11,7 @@
           <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-sm border p-8">
             <div v-if="initialLoading" class="flex items-center justify-center py-10">
               <div class="text-center">
-                <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-600 mx-auto mb-4"></div>
+                <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-[#1D546D] mx-auto mb-4"></div>
                 <p class="text-slate-500 text-sm">Memuat data profil...</p>
               </div>
             </div>
@@ -26,7 +26,7 @@
                     v-model="form.nama_lengkap"
                     :placeholder="form.nama_lengkap || 'Masukkan nama lengkap'"
                     type="text"
-                    class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-400 outline-none"
+                    class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#5F9598]/35 outline-none"
                     required
                   />
                 </div>
@@ -50,7 +50,7 @@
                     @focus="showSekolahDropdown = true"
                     type="text"
                     placeholder="Cari nama sekolah..."
-                    class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-400 outline-none"
+                    class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#5F9598]/35 outline-none"
                   />
 
                   <div
@@ -61,7 +61,7 @@
                       v-for="item in filteredSekolah"
                       :key="item.id"
                       @click="selectSekolah(item)"
-                      class="px-3 py-2 hover:bg-indigo-50 cursor-pointer text-sm"
+                      class="px-3 py-2 hover:bg-[#F3F4F4] cursor-pointer text-sm"
                     >
                       {{ item.nama }}
                     </div>
@@ -74,7 +74,7 @@
                     <label class="block text-sm font-medium text-slate-600 mb-1">Kelas</label>
                     <select
                       v-model="form.kelas"
-                      class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-400 outline-none"
+                      class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#5F9598]/35 outline-none"
                     >
                       <option value="">Pilih Kelas</option>
                       <option value="X">X</option>
@@ -89,7 +89,7 @@
                       v-model="form.whatsapp"
                       :placeholder="form.whatsapp || 'Contoh: 08123456789'"
                       type="text"
-                      class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-400 outline-none"
+                      class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#5F9598]/35 outline-none"
                     />
                   </div>
                 </div>
@@ -101,7 +101,7 @@
                     <select
                       v-model="form.provinsi_id"
                       @change="loadKabupaten"
-                      class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-400 outline-none"
+                      class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#5F9598]/35 outline-none"
                     >
                       <option value="">Pilih Provinsi</option>
                       <option v-for="p in provinsiList" :key="p.id" :value="p.id">
@@ -115,7 +115,7 @@
                     <select
                       v-model="form.kota_id"
                       @change="loadKecamatan"
-                      class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-400 outline-none"
+                      class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#5F9598]/35 outline-none"
                     >
                       <option value="">Pilih Kota/Kabupaten</option>
                       <option v-for="k in kabupatenList" :key="k.id" :value="k.id">
@@ -128,7 +128,7 @@
                     <label class="block text-sm font-medium text-slate-600 mb-1">Kecamatan</label>
                     <select
                       v-model="form.kecamatan_id"
-                      class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-400 outline-none"
+                      class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#5F9598]/35 outline-none"
                     >
                       <option value="">Pilih Kecamatan</option>
                       <option v-for="k in kecamatanList" :key="k.id" :value="k.id">
@@ -143,7 +143,7 @@
                   <button
                     type="submit"
                     :disabled="loading"
-                    class="w-full bg-indigo-600 text-white py-3 rounded-xl font-medium hover:bg-indigo-700 transition disabled:opacity-60"
+                    class="w-full bg-[#1D546D] text-white py-3 rounded-xl font-medium hover:brightness-110 transition disabled:opacity-60"
                   >
                     {{ loading ? "Menyimpan Perubahan..." : "Simpan Perubahan" }}
                   </button>
@@ -163,7 +163,7 @@
                 <p class="text-slate-600 text-sm mb-4">{{ popup.message }}</p>
                 <button
                   @click="closePopup"
-                  class="px-4 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition"
+                  class="px-4 py-2 rounded-lg bg-[#1D546D] text-white hover:brightness-110 transition"
                 >
                   Lanjutkan
                 </button>

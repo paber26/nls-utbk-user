@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-slate-100 font-poppins min-h-screen">
+  <div class="bg-bgsoft font-poppins min-h-screen">
     <div class="flex min-h-screen">
       <Sidebar />
 
@@ -7,11 +7,11 @@
         <TopbarDashboard />
 
         <div class="px-6 py-10 max-w-6xl mx-auto space-y-8">
-          <section class="rounded-3xl overflow-hidden bg-slate-950 text-white relative">
-            <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(59,130,246,0.35),_transparent_32%),radial-gradient(circle_at_bottom_right,_rgba(14,165,233,0.28),_transparent_30%)]"></div>
+          <section class="rounded-3xl overflow-hidden bg-[#061E29] text-white relative">
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(95,149,152,0.28),_transparent_30%),radial-gradient(circle_at_bottom_right,_rgba(29,84,109,0.24),_transparent_34%)]"></div>
             <div class="relative px-8 py-10 md:px-10 md:py-12 grid lg:grid-cols-[1.5fr_1fr] gap-8 items-center">
               <div>
-                <p class="text-sm uppercase tracking-[0.3em] text-sky-300">Next Level Study UTBK</p>
+                <p class="text-sm uppercase tracking-[0.3em] text-[#5F9598]">Next Level Study UTBK</p>
                 <h1 class="mt-4 text-3xl md:text-5xl font-bold leading-tight">
                   Platform latihan UTBK untuk bantu kamu tembus PTN target
                 </h1>
@@ -23,7 +23,7 @@
                 <div class="mt-8 flex flex-wrap gap-3">
                   <RouterLink
                     to="/tryout"
-                    class="px-5 py-3 rounded-xl bg-sky-400 text-slate-950 font-semibold hover:bg-sky-300 transition"
+                    class="px-5 py-3 rounded-xl bg-[#5F9598] text-[#061E29] font-semibold hover:brightness-105 transition"
                   >
                     Mulai Tryout
                   </RouterLink>
@@ -38,18 +38,18 @@
 
               <div class="grid gap-4">
                 <div class="rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur">
-                  <p class="text-sm text-slate-300">Target skor mingguan</p>
+                  <p class="text-sm text-white/75">Target skor mingguan</p>
                   <p class="mt-2 text-3xl font-bold">695+</p>
-                  <p class="mt-2 text-sm text-slate-400">Naikkan fokus pada literasi dan penalaran matematika.</p>
+                  <p class="mt-2 text-sm text-white/60">Naikkan fokus pada literasi dan penalaran matematika.</p>
                 </div>
 
                 <div class="grid grid-cols-2 gap-4">
                   <div class="rounded-2xl border border-white/10 bg-white/5 p-5">
-                    <p class="text-sm text-slate-300">Paket aktif</p>
+                    <p class="text-sm text-white/75">Paket aktif</p>
                     <p class="mt-2 text-2xl font-bold">12</p>
                   </div>
                   <div class="rounded-2xl border border-white/10 bg-white/5 p-5">
-                    <p class="text-sm text-slate-300">Progress</p>
+                    <p class="text-sm text-white/75">Progress</p>
                     <p class="mt-2 text-2xl font-bold">74%</p>
                   </div>
                 </div>
@@ -90,7 +90,7 @@
                   <h2 class="text-2xl font-semibold text-slate-800">Fokus latihan minggu ini</h2>
                   <p class="mt-2 text-slate-500">Susun prioritas dari subtes yang paling sering menurunkan skor.</p>
                 </div>
-                <span class="px-3 py-1 rounded-full bg-sky-100 text-sky-700 text-sm font-medium">Prioritas</span>
+                <span class="px-3 py-1 rounded-full bg-[#5F9598]/15 text-[#1D546D] text-sm font-medium">Prioritas</span>
               </div>
 
               <div class="mt-6 grid md:grid-cols-2 gap-4">
@@ -124,19 +124,19 @@
               <h2 class="text-2xl font-semibold text-slate-800">Roadmap 4 Minggu</h2>
               <div class="mt-6 space-y-4">
                 <div class="rounded-2xl bg-slate-50 border p-4">
-                  <p class="text-sm font-medium text-sky-700">Minggu 1</p>
+                  <p class="text-sm font-medium text-[#1D546D]">Minggu 1</p>
                   <p class="mt-2 text-sm text-slate-600">Tryout diagnostik dan baca pola salah terbanyak.</p>
                 </div>
                 <div class="rounded-2xl bg-slate-50 border p-4">
-                  <p class="text-sm font-medium text-sky-700">Minggu 2</p>
+                  <p class="text-sm font-medium text-[#1D546D]">Minggu 2</p>
                   <p class="mt-2 text-sm text-slate-600">Latihan subtes lemah dengan sesi singkat tapi konsisten.</p>
                 </div>
                 <div class="rounded-2xl bg-slate-50 border p-4">
-                  <p class="text-sm font-medium text-sky-700">Minggu 3</p>
+                  <p class="text-sm font-medium text-[#1D546D]">Minggu 3</p>
                   <p class="mt-2 text-sm text-slate-600">Simulasi penuh dan evaluasi pacing tiap blok soal.</p>
                 </div>
                 <div class="rounded-2xl bg-slate-50 border p-4">
-                  <p class="text-sm font-medium text-sky-700">Minggu 4</p>
+                  <p class="text-sm font-medium text-[#1D546D]">Minggu 4</p>
                   <p class="mt-2 text-sm text-slate-600">Ulangi tryout dan bandingkan peningkatan akurasi serta skor total.</p>
                 </div>
               </div>

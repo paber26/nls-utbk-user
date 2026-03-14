@@ -1,11 +1,11 @@
 <template>
   <div
-    class="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 via-white to-purple-50 px-6"
+    class="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#F3F4F4] via-white to-[#5F9598]/12 px-6"
   >
     <div class="max-w-2xl w-full bg-white rounded-2xl shadow-xl border p-10 text-center">
       <div class="mb-6">
         <div
-          class="w-16 h-16 mx-auto bg-indigo-100 text-indigo-600 flex items-center justify-center rounded-full text-2xl font-bold"
+          class="w-16 h-16 mx-auto bg-[#F3F4F4] text-[#1D546D] flex items-center justify-center rounded-full text-2xl font-bold"
         >
           🎓
         </div>
@@ -19,7 +19,7 @@
 
       <div class="text-left space-y-4 text-slate-700">
         <div class="flex items-start gap-3">
-          <div class="w-6 h-6 flex items-center justify-center bg-indigo-600 text-white rounded-full text-sm">1</div>
+          <div class="w-6 h-6 flex items-center justify-center bg-[#1D546D] text-white rounded-full text-sm">1</div>
           <p>
             Siswa menghubungi
             <strong>admin sekolah, mentor, atau PIC program</strong>
@@ -28,7 +28,7 @@
         </div>
 
         <div class="flex items-start gap-3">
-          <div class="w-6 h-6 flex items-center justify-center bg-indigo-600 text-white rounded-full text-sm">2</div>
+          <div class="w-6 h-6 flex items-center justify-center bg-[#1D546D] text-white rounded-full text-sm">2</div>
           <p>
             PIC akan menghubungi
             <strong>Tim Next Level Study (NLS)</strong>
@@ -37,7 +37,7 @@
         </div>
 
         <div class="flex items-start gap-3">
-          <div class="w-6 h-6 flex items-center justify-center bg-indigo-600 text-white rounded-full text-sm">3</div>
+          <div class="w-6 h-6 flex items-center justify-center bg-[#1D546D] text-white rounded-full text-sm">3</div>
           <p>
             Tim Next Level Study akan melakukan verifikasi dan
             <strong>mengaktifkan akun peserta</strong>
@@ -46,7 +46,7 @@
         </div>
       </div>
 
-      <div class="mt-8 p-4 bg-indigo-50 rounded-lg text-sm text-indigo-700">
+      <div class="mt-8 p-4 bg-[#F3F4F4] rounded-lg text-sm text-[#1D546D]">
         Setelah akun aktif, Anda dapat langsung mengerjakan tryout UTBK dan memantau progres persiapan SNBT.
       </div>
 

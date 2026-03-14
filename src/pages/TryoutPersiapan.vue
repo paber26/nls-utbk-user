@@ -18,7 +18,7 @@
             <div class="lg:col-span-2 space-y-6">
               <!-- Info Tryout -->
               <section class="bg-white rounded-xl border p-6">
-                <span class="inline-block text-xs bg-indigo-100 text-indigo-600 px-2 py-1 rounded mb-3">
+                <span class="inline-block text-xs bg-[#5F9598]/12 text-[#1D546D] px-2 py-1 rounded mb-3">
                   {{ tryout.jenjang }}
                 </span>
                 <h2 class="text-xl font-semibold text-slate-800">{{ tryout.nama }}</h2>
@@ -26,9 +26,9 @@
                   Durasi: {{ tryout.durasi }} menit • Jumlah soal: {{ tryout.jumlah_soal }}
                 </p>
 
-                <div class="mt-4 bg-indigo-50 border border-indigo-100 rounded-lg p-4 text-sm text-slate-700">
+                <div class="mt-4 bg-[#F3F4F4] border border-[#5F9598]/20 rounded-lg p-4 text-sm text-slate-700">
                   <div class="flex flex-col gap-1">
-                    <span class="font-semibold text-indigo-600">Periode Pengerjaan</span>
+                    <span class="font-semibold text-[#1D546D]">Periode Pengerjaan</span>
                     <span>
                       Mulai:
                       <b>{{ formatTanggal(tryout.mulai) }}</b>
@@ -42,9 +42,9 @@
               </section>
 
               <!-- Ketentuan Khusus (Dari Admin) -->
-              <section v-if="tryout.ketentuan_khusus" class="bg-white rounded-xl border border-amber-200 p-6">
+              <section v-if="tryout.ketentuan_khusus" class="bg-white rounded-xl border border-[#5F9598]/20 p-6">
                 <div class="flex items-center gap-2 mb-4">
-                  <span class="text-amber-600">⚠</span>
+                  <span class="text-[#1D546D]">⚠</span>
                   <h3 class="text-lg font-semibold text-slate-800">Ketentuan Khusus Tryout</h3>
                 </div>
 
@@ -105,9 +105,9 @@
               </section>
 
               <!-- Konfirmasi -->
-              <section class="bg-white rounded-xl border border-indigo-200 p-6">
+              <section class="bg-white rounded-xl border border-[#5F9598]/20 p-6">
                 <div v-if="statusPeriode === 'belum_mulai'" class="text-center space-y-3">
-                  <div class="text-lg font-semibold text-indigo-600">Tryout akan dimulai dalam:</div>
+                  <div class="text-lg font-semibold text-[#1D546D]">Tryout akan dimulai dalam:</div>
                   <div class="text-xl font-bold text-slate-800">
                     {{ countdownText }}
                   </div>
@@ -134,7 +134,7 @@
                     <button
                       @click="startTryout"
                       :disabled="!confirmed"
-                      class="flex-1 px-6 py-3 rounded-lg bg-indigo-600 text-white text-center font-semibold hover:bg-indigo-700 disabled:opacity-50"
+                      class="flex-1 px-6 py-3 rounded-lg bg-[#1D546D] text-white text-center font-semibold hover:brightness-110 disabled:opacity-50"
                     >
                       Mulai Tryout
                     </button>

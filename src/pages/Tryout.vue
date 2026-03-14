@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-slate-100 font-poppins">
+  <div class="bg-bgsoft font-poppins">
     <div class="flex min-h-screen">
       <Sidebar></Sidebar>
 
@@ -10,11 +10,11 @@
         <!-- Content -->
         <div class="px-6 py-8">
           <section
-            class="mb-8 rounded-3xl bg-gradient-to-br from-slate-950 via-slate-900 to-sky-900 text-white px-6 py-7 md:px-8"
+            class="mb-8 rounded-3xl bg-gradient-to-br from-[#061E29] via-[#1D546D] to-[#5F9598] text-white px-6 py-7 md:px-8"
           >
             <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
               <div class="max-w-2xl">
-                <p class="text-sm uppercase tracking-[0.28em] text-sky-300">Simulasi UTBK</p>
+                <p class="text-sm uppercase tracking-[0.28em] text-[#5F9598]">Simulasi UTBK</p>
                 <h2 class="mt-3 text-2xl md:text-3xl font-bold">Pilih paket tryout yang paling relevan dengan targetmu</h2>
                 <p class="mt-3 text-slate-300 leading-relaxed">
                   Kerjakan paket per subtes untuk drilling, lalu lanjutkan ke simulasi penuh saat ritme dan akurasi
@@ -43,7 +43,7 @@
               @click="activeFilter = f"
               :class="[
                 'px-4 py-2 rounded-lg text-sm',
-                activeFilter === f ? 'bg-indigo-500 text-white' : 'bg-white border'
+                activeFilter === f ? 'bg-[#1D546D] text-white' : 'bg-white border border-[#5F9598]/35 text-slate-700'
               ]"
             >
               {{ f }}
@@ -54,7 +54,7 @@
           <section v-if="loading" class="flex justify-center items-center py-20">
             <div class="text-center">
               <div
-                class="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"
+                class="w-12 h-12 border-4 border-[#1D546D] border-t-transparent rounded-full animate-spin mx-auto mb-4"
               ></div>
               <p class="text-slate-500 text-sm">Memuat paket tryout...</p>
             </div>
@@ -63,7 +63,7 @@
           <!-- Tryout List -->
           <section v-else-if="filteredTryouts.length" class="grid md:grid-cols-3 gap-6">
             <div v-for="item in filteredTryouts" :key="item.id" class="bg-white p-6 rounded-xl border">
-              <span class="text-xs bg-indigo-50 text-indigo-600 px-2 py-1 rounded">
+              <span class="text-xs bg-[#5F9598]/12 text-[#1D546D] px-2 py-1 rounded">
                 {{ getItemBadge(item) }}
               </span>
 
@@ -76,7 +76,7 @@
               <!-- Status -->
               <span
                 v-if="item.status === null"
-                class="inline-block mt-3 text-xs text-orange-600 bg-orange-100 px-2 py-1 rounded"
+                class="inline-block mt-3 text-xs text-[#1D546D] bg-[#F3F4F4] px-2 py-1 rounded"
               >
                 Belum Dikerjakan
               </span>
@@ -90,7 +90,7 @@
 
               <span
                 v-else-if="item.status === 'ongoing'"
-                class="inline-block mt-3 text-xs text-blue-600 bg-blue-100 px-2 py-1 rounded"
+                class="inline-block mt-3 text-xs text-[#1D546D] bg-[#5F9598]/12 px-2 py-1 rounded"
               >
                 Sedang Berjalan
               </span>
@@ -99,7 +99,7 @@
               <button
                 v-if="item.status === null"
                 @click="router.push(`/tryout/persiapan/${item.id}`)"
-                class="mt-4 block w-full text-center bg-indigo-500 text-white py-2 rounded-lg hover:bg-indigo-700"
+                class="mt-4 block w-full text-center bg-[#1D546D] text-white py-2 rounded-lg hover:brightness-110"
               >
                 Mulai Tryout
               </button>
@@ -107,7 +107,7 @@
               <RouterLink
                 v-else-if="item.status === 'submitted'"
                 :to="`/tryout/hasil/${item.id}`"
-                class="mt-4 block w-full text-center border border-indigo-500 text-indigo-500 py-2 rounded-lg hover:bg-indigo-500 hover:text-white"
+                class="mt-4 block w-full text-center border border-[#1D546D] text-[#1D546D] py-2 rounded-lg hover:bg-[#1D546D] hover:text-white"
               >
                 Lihat Hasil
               </RouterLink>
@@ -115,7 +115,7 @@
               <button
                 v-else-if="item.status === 'ongoing'"
                 @click="router.push(`/tryout/kerjakan/${item.id}`)"
-                class="mt-4 block w-full text-center bg-indigo-500 text-white py-2 rounded-lg hover:bg-indigo-700"
+                class="mt-4 block w-full text-center bg-[#1D546D] text-white py-2 rounded-lg hover:brightness-110"
               >
                 Lanjutkan
               </button>
@@ -139,20 +139,20 @@
                   matematika. Pantau terus agar tidak tertinggal pembukaan aksesnya.
                 </p>
               </div>
-              <span class="text-xs bg-indigo-100 text-indigo-600 px-3 py-1 rounded-full">Coming Soon</span>
+              <span class="text-xs bg-[#5F9598]/14 text-[#1D546D] px-3 py-1 rounded-full">Coming Soon</span>
             </div>
 
             <div class="grid md:grid-cols-3 gap-6">
               <div
                 v-for="item in dummyUpcoming"
                 :key="item.id"
-                class="relative bg-gradient-to-br from-white to-indigo-50 p-6 rounded-2xl border border-indigo-100 shadow-sm hover:shadow-md transition duration-300"
+                class="relative bg-gradient-to-br from-white to-[#F3F4F4] p-6 rounded-2xl border border-[#5F9598]/20 shadow-sm hover:shadow-md transition duration-300"
               >
-                <div class="absolute top-4 right-4 text-xs bg-purple-600 text-white px-2 py-1 rounded-full">
+                <div class="absolute top-4 right-4 text-xs bg-[#1D546D] text-white px-2 py-1 rounded-full">
                   Upcoming
                 </div>
 
-                <span class="text-xs bg-indigo-50 text-indigo-600 px-2 py-1 rounded">
+                <span class="text-xs bg-[#5F9598]/12 text-[#1D546D] px-2 py-1 rounded">
                   {{ item.kategori }} • {{ item.mapel }}
                 </span>
 

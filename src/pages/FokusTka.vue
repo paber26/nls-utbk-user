@@ -9,7 +9,7 @@
         <div class="blob blob2"></div>
 
         <div class="relative w-full max-w-3xl rounded-3xl shadow-2xl overflow-hidden">
-          <div class="absolute inset-0 bg-gradient-to-br from-slate-900 via-indigo-900 to-sky-700"></div>
+          <div class="absolute inset-0 bg-gradient-to-br from-[#061E29] via-[#1D546D] to-[#5F9598]"></div>
 
           <!-- Overlay -->
           <div class="absolute inset-0 bg-black/10"></div>
@@ -44,7 +44,7 @@
             </div>
 
             <div
-              class="bg-white text-blue-600 font-semibold px-8 py-3 rounded-full shadow-lg hover:scale-105 transition-transform duration-300"
+              class="bg-white text-[#1D546D] font-semibold px-8 py-3 rounded-full shadow-lg hover:scale-105 transition-transform duration-300"
             >
               Segera hadir: target kampus dan strategi skor
             </div>

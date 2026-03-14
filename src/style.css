@@ -3,10 +3,11 @@
 @theme {
   --font-poppins: "Poppins", sans-serif;
 
-  --color-primary: #4f46e5; /* bg-indigo-500 */
-  --color-sidebar: #0f172a; /* bg-slate-900 */
-  --color-sideover: #1e293b;
-  --color-bgsoft: #f1f5f9;
+  --color-primary: #1d546d;
+  --color-sidebar: #061e29;
+  --color-sideover: #1d546d;
+  --color-accent: #5f9598;
+  --color-bgsoft: #f3f4f4;
 }
 
 @layer utilities {
@@ -16,5 +17,25 @@
 
   .text-primary {
     color: var(--color-primary);
+  }
+
+  .bg-sidebar {
+    background-color: var(--color-sidebar);
+  }
+
+  .bg-sideover {
+    background-color: var(--color-sideover);
+  }
+
+  .bg-accent {
+    background-color: var(--color-accent);
+  }
+
+  .text-accent {
+    color: var(--color-accent);
+  }
+
+  .border-accent {
+    border-color: var(--color-accent);
   }
 }

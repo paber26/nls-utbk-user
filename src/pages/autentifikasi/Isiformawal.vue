@@ -40,7 +40,7 @@
               <li
                 v-for="s in filteredSekolah"
                 :key="s.id"
-                class="px-4 py-2 hover:bg-indigo-50 cursor-pointer text-sm"
+                class="px-4 py-2 hover:bg-[#F3F4F4] cursor-pointer text-sm"
                 @click="selectSekolah(s)"
               >
                 {{ s.nama }} ({{ s.status }})
@@ -166,7 +166,7 @@
 
         <button
           type="submit"
-          class="w-full mt-4 bg-indigo-600 text-white py-3 rounded-xl font-semibold hover:bg-indigo-700 transition"
+          class="w-full mt-4 bg-[#1D546D] text-white py-3 rounded-xl font-semibold hover:brightness-110 transition"
         >
           Simpan & Lanjut ke Dashboard
         </button>

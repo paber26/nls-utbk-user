@@ -4,13 +4,13 @@
       <Sidebar />
 
       <div class="flex-1 flex items-center justify-center p-8 relative overflow-hidden">
-        <div class="absolute -top-32 -left-32 w-96 h-96 bg-sky-500/30 rounded-full blur-3xl"></div>
-        <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-cyan-400/30 rounded-full blur-3xl"></div>
+        <div class="absolute -top-32 -left-32 w-96 h-96 bg-[#5F9598]/22 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-[#1D546D]/20 rounded-full blur-3xl"></div>
 
         <!-- Main Card -->
         <div class="relative w-full max-w-3xl rounded-3xl shadow-2xl overflow-hidden">
           <!-- Gradient Background -->
-          <div class="absolute inset-0 bg-gradient-to-br from-slate-950 via-sky-900 to-cyan-600"></div>
+          <div class="absolute inset-0 bg-gradient-to-br from-[#061E29] via-[#1D546D] to-[#5F9598]"></div>
 
           <!-- Overlay Pattern Effect -->
           <div class="absolute inset-0 bg-black/10"></div>
@@ -44,7 +44,7 @@
               </div>
             </div>
 
-            <div class="bg-white text-sky-700 font-semibold px-8 py-3 rounded-full shadow-lg">
+            <div class="bg-white text-[#1D546D] font-semibold px-8 py-3 rounded-full shadow-lg">
               Segera jadi pusat strategi belajar UTBK
             </div>
           </div>

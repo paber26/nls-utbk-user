@@ -16,7 +16,7 @@
         <div class="px-4 md:px-6 py-6 w-full">
           <!-- Loading State -->
           <div v-if="loading" class="flex flex-col items-center justify-center py-20">
-            <div class="w-12 h-12 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin"></div>
+            <div class="w-12 h-12 border-4 border-[#5F9598]/25 border-t-[#1D546D] rounded-full animate-spin"></div>
             <p class="mt-4 text-slate-500">Memuat hasil tryout...</p>
           </div>
 
@@ -24,7 +24,7 @@
           <div v-else>
             <!-- ================= INFO TRYOUT ================= -->
             <section class="bg-white rounded-xl border p-6 mb-6">
-              <span class="inline-block text-xs bg-indigo-100 text-indigo-600 px-2 py-1 rounded mb-2">
+              <span class="inline-block text-xs bg-[#5F9598]/12 text-[#1D546D] px-2 py-1 rounded mb-2">
                 {{ badgeLabel }}
               </span>
               <h2 class="text-xl font-semibold text-slate-800">
@@ -162,8 +162,8 @@
                       </div>
                     </div>
 
-                    <div class="rounded-xl bg-indigo-50 border border-indigo-100 px-4 py-4">
-                      <p class="text-sm font-semibold text-indigo-700 mb-2">Pembahasan</p>
+                    <div class="rounded-xl bg-[#F3F4F4] border border-[#5F9598]/20 px-4 py-4">
+                      <p class="text-sm font-semibold text-[#1D546D] mb-2">Pembahasan</p>
                       <div
                         v-if="getPembahasan(item)"
                         class="prose prose-slate max-w-none text-slate-700"
@@ -191,7 +191,7 @@
 
                 <a
                   href="peringkat.html"
-                  class="flex-1 text-center px-6 py-3 rounded-lg bg-primary text-white hover:bg-indigo-700"
+                  class="flex-1 text-center px-6 py-3 rounded-lg bg-primary text-white hover:brightness-110"
                 >
                   Lihat Peringkat
                 </a>

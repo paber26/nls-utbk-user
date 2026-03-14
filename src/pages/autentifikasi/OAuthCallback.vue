@@ -1,9 +1,9 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gray-50">
+  <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#F3F4F4] via-white to-[#5F9598]/12">
     <div class="bg-white p-8 rounded-xl shadow-md text-center w-full max-w-sm">
       <div v-if="!error">
         <div
-          class="animate-spin mx-auto mb-4 h-8 w-8 border-4 border-indigo-500 border-t-transparent rounded-full"
+          class="animate-spin mx-auto mb-4 h-8 w-8 border-4 border-[#1D546D] border-t-transparent rounded-full"
         ></div>
         <h2 class="text-lg font-semibold text-gray-800">Sedang masuk…</h2>
         <p class="text-sm text-gray-500 mt-2">Mohon tunggu, kami sedang memverifikasi akun Anda.</p>

@@ -1,19 +1,19 @@
 <template>
   <!-- ================= SIDEBAR ================= -->
-  <aside class="w-64 bg-slate-900 text-slate-200 flex flex-col">
+  <aside class="w-64 bg-sidebar text-slate-200 flex flex-col">
     <!-- Logo -->
-    <div class="px-6 py-5 border-b border-slate-800">
-      <p class="text-xs uppercase tracking-[0.3em] text-slate-500">Next Level Study</p>
+    <div class="px-6 py-5 border-b border-white/10">
+      <p class="text-xs uppercase tracking-[0.3em] text-white/55">Next Level Study</p>
       <p class="text-lg font-semibold text-white mt-1">UTBK Hub</p>
     </div>
 
     <!-- User Info -->
-    <div class="px-6 py-4 border-b border-slate-800">
-      <p class="text-xs text-slate-400">Peserta UTBK</p>
+    <div class="px-6 py-4 border-b border-white/10">
+      <p class="text-xs text-white/55">Peserta UTBK</p>
       <p class="font-medium">
         {{ user?.nama_lengkap || user?.name || "Memuat..." }}
       </p>
-      <p class="text-xs text-slate-400">{{ user?.sekolah || "-" }} • Kelas {{ user?.kelas || "-" }}</p>
+      <p class="text-xs text-white/55">{{ user?.sekolah || "-" }} • Kelas {{ user?.kelas || "-" }}</p>
     </div>
 
     <!-- Menu -->
@@ -21,7 +21,7 @@
       <RouterLink
         to="/"
         class="flex items-center gap-3 px-4 py-3 rounded-lg transition"
-        :class="$route.path === '/' ? 'bg-slate-800 text-white' : 'hover:bg-slate-800 text-slate-300'"
+        :class="$route.path === '/' ? 'bg-sideover text-white' : 'hover:bg-sideover text-slate-300'"
       >
         🏠
         <span>Beranda</span>
@@ -30,7 +30,7 @@
       <RouterLink
         to="/tryout"
         class="flex items-center gap-3 px-4 py-3 rounded-lg transition"
-        :class="isTryoutRoute ? 'bg-slate-800 text-white' : 'hover:bg-slate-800 text-slate-300'"
+        :class="isTryoutRoute ? 'bg-sideover text-white' : 'hover:bg-sideover text-slate-300'"
       >
         📝
         <span>Tryout UTBK</span>
@@ -39,7 +39,7 @@
       <RouterLink
         to="/fokus-utbk"
         class="flex items-center gap-3 px-4 py-3 rounded-lg transition"
-        :class="$route.path === '/fokus-utbk' ? 'bg-slate-800 text-white' : 'hover:bg-slate-800 text-slate-300'"
+        :class="$route.path === '/fokus-utbk' ? 'bg-sideover text-white' : 'hover:bg-sideover text-slate-300'"
       >
         📘
         <span>Fokus UTBK</span>
@@ -50,8 +50,8 @@
         class="flex items-center gap-3 px-4 py-3 rounded-lg transition"
         :class="
           $route.path === '/target-ptn' || $route.path === '/fokus-tka'
-            ? 'bg-slate-800 text-white'
-            : 'hover:bg-slate-800 text-slate-300'
+            ? 'bg-sideover text-white'
+            : 'hover:bg-sideover text-slate-300'
         "
       >
         🎯
@@ -61,7 +61,7 @@
       <RouterLink
         to="/peringkat"
         class="flex items-center gap-3 px-4 py-3 rounded-lg transition"
-        :class="$route.path === '/peringkat' ? 'bg-slate-800 text-white' : 'hover:bg-slate-800 text-slate-300'"
+        :class="$route.path === '/peringkat' ? 'bg-sideover text-white' : 'hover:bg-sideover text-slate-300'"
       >
         🏆
         <span>Peringkat SNBT</span>
@@ -70,7 +70,7 @@
       <RouterLink
         to="/edit-profil"
         class="flex items-center gap-3 px-4 py-3 rounded-lg transition"
-        :class="$route.path === '/edit-profil' ? 'bg-slate-800 text-white' : 'hover:bg-slate-800 text-slate-300'"
+        :class="$route.path === '/edit-profil' ? 'bg-sideover text-white' : 'hover:bg-sideover text-slate-300'"
       >
         👤
         <span>Edit Profil</span>
@@ -78,7 +78,7 @@
     </nav>
 
     <!-- Logout -->
-    <div class="px-3 py-4 border-t border-slate-800">
+    <div class="px-3 py-4 border-t border-white/10">
       <button
         @click="logout"
         class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-red-400 hover:bg-red-500/10 transition"
