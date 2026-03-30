@@ -2,21 +2,37 @@
   <div class="min-h-screen bg-bgsoft flex select-none" @copy.prevent @cut.prevent @contextmenu.prevent>
     <!-- Sidebar (optional placeholder) -->
     <aside
-      class="bg-white border-r w-64 flex-shrink-0 fixed inset-y-0 left-0 z-40 transform transition-transform duration-300 lg:static lg:translate-x-0"
+      class="bg-white border-r w-72 flex-shrink-0 flex flex-col fixed inset-y-0 left-0 z-40 transform transition-transform duration-300 lg:static lg:translate-x-0"
       :class="showDaftarSoal ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'"
     >
-      <div class="p-4 font-bold text-[#1D546D]">Daftar Soal</div>
-      <div class="p-4 grid grid-cols-5 gap-2">
-        <button
-          v-for="n in totalSoal"
-          :key="n"
-          class="relative w-10 h-10 rounded border text-sm font-semibold"
-          :class="statusClass(n)"
-          @click="openQuestion(n)"
-        >
-          {{ n }}
-          <span v-if="opened[n]" class="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-gray-300"></span>
-        </button>
+      <div class="p-4 font-bold text-[#1D546D] border-b bg-slate-50 flex items-center justify-between">
+        <span>Daftar Soal</span>
+        <span class="text-xs font-normal text-slate-500 bg-white border px-2 py-0.5 rounded">{{ totalSoal }} Total</span>
+      </div>
+      <div class="p-4 overflow-y-auto flex-1 space-y-6">
+        <div v-if="activeKomponenNama && groupedSoalList[activeKomponenNama]">
+          <div class="mb-3 text-sm font-semibold text-slate-700 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+               <div class="w-1.5 h-1.5 rounded-full bg-[#1D546D]"></div>
+               <span class="leading-tight">{{ activeKomponenNama }}</span>
+            </div>
+          </div>
+          <div class="grid grid-cols-5 gap-2">
+            <button
+              v-for="n in groupedSoalList[activeKomponenNama].items"
+              :key="n"
+              class="relative w-10 h-10 rounded border text-sm font-semibold transition-all hover:brightness-95 hover:shadow-sm"
+              :class="statusClass(n)"
+              @click="openQuestion(n)"
+            >
+              {{ n }}
+              <span v-if="opened[n]" class="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-slate-200 border border-white"></span>
+            </button>
+          </div>
+        </div>
+        <div v-else class="text-center text-slate-400 text-sm py-10">
+          Memuat subtes...
+        </div>
       </div>
     </aside>
     <div
@@ -30,7 +46,11 @@
       <!-- Header -->
       <div class="flex justify-between items-center mb-6">
         <div>
-          <div class="mb-1 text-sm text-slate-500">
+          <div class="mb-3 font-semibold text-[#1D546D] px-2 py-0.5 bg-[#1D546D]/10 rounded inline-block text-sm">
+            Subtes: {{ activeKomponenNama || '-' }}
+          </div>
+          <br/>
+          <div class="mb-1 text-sm text-slate-500 inline-block">
             Peserta:
             <span class="font-medium text-slate-700">{{ pesertaNama }}</span>
           </div>
@@ -54,7 +74,7 @@
             class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
             @click="showFinishPopup = true"
           >
-            Akhiri Tryout
+            Akhiri Subtes
           </button>
         </div>
       </div>
@@ -185,7 +205,7 @@
           <!-- Footer Navigation -->
           <div class="relative flex items-center justify-center mt-8">
             <button
-              v-if="currentNumber > 1"
+              v-if="soalListDalamKomponen.indexOf(currentNumber) > 0"
               class="absolute left-0 px-6 py-2 bg-red-500 text-white rounded"
               @click="prevQuestion"
             >
@@ -204,7 +224,7 @@
             </button>
 
             <button
-              v-if="currentNumber < totalSoal"
+              v-if="soalListDalamKomponen.indexOf(currentNumber) !== -1 && soalListDalamKomponen.indexOf(currentNumber) < soalListDalamKomponen.length - 1"
               class="absolute right-0 px-6 py-2 bg-[#1D546D] text-white rounded"
               @click="nextQuestion"
             >
@@ -236,13 +256,13 @@
     <!-- Finish Confirmation Popup -->
     <div v-if="showFinishPopup" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div class="bg-white rounded-xl p-6 w-full max-w-md text-center shadow-xl">
-        <h3 class="text-lg font-semibold text-red-600 mb-3">Akhiri Tryout?</h3>
+        <h3 class="text-lg font-semibold text-red-600 mb-3">Akhiri Subtes?</h3>
         <p class="text-slate-600 mb-6">
-          Waktu pengerjaan kamu masih tersedia.
+          Waktu pengerjaan untuk subtes <b>{{ activeKomponenNama }}</b> masih tersedia.
           <br />
-          Apakah kamu yakin ingin mengakhiri tryout sekarang?
-          <br />
-          Jawaban yang sudah diisi akan dikumpulkan dan tryout tidak dapat dilanjutkan.
+          Anda yakin ingin mengakhiri lebih awal?
+          <br /><br />
+          <span class="text-sm text-red-500">Subtes yang telah diakhiri tidak dapat diulangi kembali!</span>
         </p>
         <div class="flex justify-center gap-4">
           <button class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 transition" @click="showFinishPopup = false">
@@ -328,6 +348,14 @@ const contentContainer = ref(null)
 const timer = ref("00:00")
 let countdownInterval = null
 
+const activeKomponenNama = ref("")
+const loadingNext = ref(false)
+
+const soalListDalamKomponen = computed(() => {
+  if (!activeKomponenNama.value || !groupedSoalList.value[activeKomponenNama.value]) return []
+  return groupedSoalList.value[activeKomponenNama.value].items
+})
+
 // ===== Anti-Cheat & Fullscreen Logic =====
 const warningCount = ref(0)
 const WARNING_KEY = `tryout-warning-${tryoutId}`
@@ -357,7 +385,7 @@ function handleVisibilityChange() {
     localStorage.setItem(WARNING_KEY, warningCount.value)
     showWarningPopup.value = true
 
-    if (warningCount.value >= 10) {
+    if (warningCount.value >= 100) {
       finishTryout()
     }
   }
@@ -372,7 +400,7 @@ function handleWindowBlur() {
   localStorage.setItem(WARNING_KEY, warningCount.value)
   showWarningPopup.value = true
 
-  if (warningCount.value >= 10) {
+  if (warningCount.value >= 100) {
     finishTryout()
   }
 }
@@ -456,12 +484,33 @@ async function fetchAllQuestions() {
       total_soal: list.length,
       pertanyaan: q.pertanyaan,
       opsi: q.opsi,
-      peserta: q.peserta
+      peserta: q.peserta,
+      komponen_nama: q.komponen_nama
     }
   })
 
   isLoadingQuestion.value = false
 }
+
+const groupedSoalList = computed(() => {
+  const groups = {}
+
+  for (let n = 1; n <= totalSoal.value; n++) {
+    const q = tryoutStore.questionsCache[n]
+    if (!q) continue
+
+    const namaKomponen = q.komponen_nama || "Lainnya"
+    if (!groups[namaKomponen]) {
+      groups[namaKomponen] = {
+        nama: namaKomponen,
+        items: []
+      }
+    }
+    groups[namaKomponen].items.push(n)
+  }
+
+  return groups
+})
 
 const showOptions = computed(() => {
   return tipeSoal.value === "pg" || tipeSoal.value === "pg_majemuk" || tipeSoal.value === "pg_kompleks"
@@ -647,9 +696,17 @@ onMounted(async () => {
   }
 
   await fetchAllQuestions()
-  fetchQuestion(currentNumber.value)
+  await startCountdown()
+
+  if (soalListDalamKomponen.value.length > 0) {
+     if (!soalListDalamKomponen.value.includes(currentNumber.value)) {
+         openQuestion(soalListDalamKomponen.value[0])
+     } else {
+         fetchQuestion(currentNumber.value)
+     }
+  }
+  
   renderKatex()
-  startCountdown()
 })
 
 onBeforeUnmount(() => {
@@ -677,10 +734,11 @@ async function startCountdown() {
   try {
     const res = await api.get(`/user/tryout/${tryoutId}/remaining-time`)
     let remaining = Math.floor(res.data.sisa_detik)
+    
+    activeKomponenNama.value = res.data.komponen_nama || '-'
+    
     // Jika waktu tryout sudah habis sebelum halaman dibuka
-    if (remaining <= 0) {
-      // Jika waktu tryout sudah lewat atau attempt sudah selesai,
-      // peserta tidak boleh membuka halaman kerjakan
+    if (remaining <= 0 && !res.data.komponen_id) {
       alertType.value = "error"
       alertMessage.value = "Waktu tryout sudah berakhir atau tryout sudah diselesaikan. Anda akan diarahkan keluar."
       showAlertPopup.value = true
@@ -691,7 +749,12 @@ async function startCountdown() {
 
       return
     }
-    console.log("Initial remaining time (seconds):", res)
+
+    if (remaining <= 0 && res.data.komponen_id) {
+        // jika refres di posisi detik 0 maka panggil alert waktu habis
+        handleTimeUp()
+        return
+    }
 
     console.log("Remaining time (seconds):", remaining)
     timer.value = formatTime(remaining)
@@ -706,7 +769,7 @@ async function startCountdown() {
         timer.value = formatTime(remaining)
       } else {
         clearInterval(countdownInterval)
-        finishTryout()
+        handleTimeUp()
       }
     }, 1000)
   } catch (e) {
@@ -715,20 +778,24 @@ async function startCountdown() {
 }
 
 function prevQuestion() {
-  if (currentNumber.value > 1) {
-    openQuestion(currentNumber.value - 1)
+  const arr = soalListDalamKomponen.value;
+  const idx = arr.indexOf(currentNumber.value);
+  if (idx > 0) {
+    openQuestion(arr[idx - 1]);
   }
 }
 
 function nextQuestion() {
-  if (currentNumber.value < totalSoal.value) {
-    openQuestion(currentNumber.value + 1)
+  const arr = soalListDalamKomponen.value;
+  const idx = arr.indexOf(currentNumber.value);
+  if (idx !== -1 && idx < arr.length - 1) {
+    openQuestion(arr[idx + 1]);
   }
 }
 
 function handleFinishConfirm() {
   showFinishPopup.value = false
-  finishTryout()
+  moveToNextKomponen()
 }
 
 function handleAlertClose() {
@@ -745,21 +812,45 @@ function handleAlertClose() {
   }
 }
 
-async function finishTryout() {
+function handleTimeUp() {
+  alertType.value = "error"
+  alertMessage.value = "Waktu pengerjaan untuk subtes ini telah habis. Klik OK untuk menyimpan jawaban dan melanjutkan ke subtes berikutnya."
+  showAlertPopup.value = true
+  endTryoutAfterAlert.value = true
+}
+
+async function moveToNextKomponen() {
+  if (loadingNext.value) return
+  loadingNext.value = true
+  
   try {
-    const tes = await api.post(`/user/tryout/${tryoutId}/finish`)
-    console.log("Finish tryout response:", tes)
-    localStorage.removeItem(STORAGE_KEY)
-    localStorage.removeItem(WARNING_KEY)
-    console.log("Finish tryout response:", tes)
-    alertType.value = "success"
-    alertMessage.value = "Tryout berhasil diakhiri"
-    showAlertPopup.value = true
+    const res = await api.post(`/user/tryout/${tryoutId}/next-komponen`)
+    
+    if (res.data.is_finished) {
+      localStorage.removeItem(STORAGE_KEY)
+      localStorage.removeItem(WARNING_KEY)
+      alertType.value = "success"
+      alertMessage.value = "Tryout berhasil diselesaikan!"
+      showAlertPopup.value = true
+    } else {
+      // Pindah ke subtes selanjutnya
+      await startCountdown()
+
+      if (soalListDalamKomponen.value.length > 0) {
+        openQuestion(soalListDalamKomponen.value[0])
+      }
+    }
   } catch (e) {
     alertType.value = "error"
-    alertMessage.value = "Gagal mengakhiri tryout"
+    alertMessage.value = "Gagal memproses alur subtes"
     showAlertPopup.value = true
     console.error(e)
+  } finally {
+    loadingNext.value = false
   }
+}
+
+async function finishTryout() {
+  moveToNextKomponen()
 }
 </script>
