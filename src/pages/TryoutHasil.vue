@@ -78,18 +78,21 @@
             <section class="bg-white rounded-xl border p-6 mb-6">
               <h3 class="font-semibold text-slate-800 mb-4">Ringkasan Jawaban</h3>
 
-              <div class="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 gap-2">
-                <div
-                  v-for="n in navigasi"
-                  :key="n.nomor"
-                  class="w-10 h-10 rounded-lg flex items-center justify-center text-white"
-                  :class="{
-                    'bg-emerald-500': n.status === 'benar',
-                    'bg-red-500': n.status === 'salah',
-                    'bg-slate-300 text-slate-700': n.status === 'kosong'
-                  }"
-                >
-                  {{ n.nomor }}
+              <div v-for="(items, komponen) in groupedNavigasi" :key="komponen" class="mb-6 last:mb-0">
+                <h4 class="text-sm font-medium text-slate-600 mb-3">{{ komponen }}</h4>
+                <div class="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 gap-2">
+                  <div
+                    v-for="n in items"
+                    :key="n.nomor"
+                    class="w-10 h-10 rounded-lg flex items-center justify-center text-white shadow-sm"
+                    :class="{
+                      'bg-emerald-500': n.status === 'benar',
+                      'bg-red-500': n.status === 'salah',
+                      'bg-slate-300 text-slate-700': n.status === 'kosong'
+                    }"
+                  >
+                    {{ n.nomor }}
+                  </div>
                 </div>
               </div>
 
@@ -228,6 +231,18 @@ const ringkasan = ref({
   kosong: 0
 })
 const navigasi = ref([])
+
+const groupedNavigasi = computed(() => {
+  const groups = {}
+  navigasi.value.forEach((item) => {
+    const comp = item.komponen || "Lainnya"
+    if (!groups[comp]) {
+      groups[comp] = []
+    }
+    groups[comp].push(item)
+  })
+  return groups
+})
 const pembahasanData = ref([])
 const root = ref(null) // reference to main wrapper for KaTeX
 
