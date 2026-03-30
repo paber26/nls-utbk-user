@@ -84,11 +84,11 @@
         <div v-if="isLoadingQuestion" class="flex justify-center items-center py-10">
           <div class="animate-spin rounded-full h-8 w-8 border-4 border-[#1D546D] border-t-transparent"></div>
         </div>
-        <div v-else ref="contentContainer">
+        <div v-else ref="contentContainer" :key="'question-container-' + currentNumber">
           <div ref="soalContainer" :class="fontSize" class="leading-relaxed mb-6" v-html="soalText"></div>
 
           <!-- Pilihan Ganda -->
-          <div v-if="tipeSoal === 'pg'" class="space-y-5">
+          <div v-if="tipeSoal === 'pg'" key="ans-pg" class="space-y-5">
             <div
               v-for="(opt, index) in options"
               :key="opt.key"
@@ -116,7 +116,7 @@
           </div>
 
           <!-- PG Majemuk -->
-          <div v-else-if="tipeSoal === 'pg_majemuk'" class="space-y-5">
+          <div v-else-if="tipeSoal === 'pg_majemuk'" key="ans-pg-majemuk" class="space-y-5">
             <div
               v-for="(opt, index) in options"
               :key="opt.key"
@@ -143,7 +143,7 @@
           </div>
 
           <!-- PG Kompleks (Improved UI) -->
-          <div v-else-if="showOptions && tipeSoal === 'pg_kompleks'" class="space-y-5">
+          <div v-else-if="showOptions && tipeSoal === 'pg_kompleks'" key="ans-pg-kompleks" class="space-y-5">
             <div
               v-for="(opt, index) in options"
               :key="opt.key"
@@ -192,9 +192,10 @@
           </div>
 
           <!-- Isian -->
-          <div v-else-if="showIsian" class="space-y-4">
+          <div v-else-if="showIsian" key="ans-isian" class="space-y-4">
             <input
               type="text"
+              :key="'input-isian-' + currentNumber"
               v-model="textAnswer"
               @blur="onAnswerChange"
               placeholder="Ketik jawaban Anda di sini"
