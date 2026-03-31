@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router"
 
-import OAuthCallback from "../pages/Autentifikasi/OAuthCallback.vue"
+import OAuthCallback from "../pages/autentifikasi/OAuthCallback.vue"
 
 import Home from "../pages/Home.vue"
 import About from "../pages/About.vue"
