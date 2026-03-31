@@ -81,10 +81,11 @@
               <div v-for="(items, komponen) in groupedNavigasi" :key="komponen" class="mb-6 last:mb-0">
                 <h4 class="text-sm font-medium text-slate-600 mb-3">{{ komponen }}</h4>
                 <div class="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 gap-2">
-                  <div
+                  <button
                     v-for="n in items"
                     :key="n.nomor"
-                    class="w-10 h-10 rounded-lg flex items-center justify-center text-white shadow-sm"
+                    @click="scrollToSoal(n.nomor)"
+                    class="w-10 h-10 rounded-lg flex items-center justify-center text-white shadow-sm hover:scale-105 transition-transform"
                     :class="{
                       'bg-emerald-500': n.status === 'benar',
                       'bg-red-500': n.status === 'salah',
@@ -92,7 +93,7 @@
                     }"
                   >
                     {{ n.nomor }}
-                  </div>
+                  </button>
                 </div>
               </div>
 
@@ -121,10 +122,19 @@
                   <article
                     v-for="(item, index) in detailPembahasan"
                     :key="item.id || item.nomor || item.no_soal || index"
+                    :id="`soal-${getNomor(item, index)}`"
                     class="border border-slate-200 rounded-xl p-5"
                   >
                     <div class="flex items-center justify-between gap-3 mb-4">
-                      <h4 class="font-semibold text-slate-800">Soal {{ getNomor(item, index) }}</h4>
+                      <h4 class="font-semibold text-sm sm:text-base flex flex-wrap items-center gap-2">
+                        Soal {{ getNomor(item, index) }}
+                        <span
+                          v-if="item.komponen_nama"
+                          class="text-[10px] sm:text-xs px-2.5 py-1 rounded-full font-medium bg-[#1D546D]/10 text-[#1D546D]"
+                        >
+                          {{ item.komponen_nama }}
+                        </span>
+                      </h4>
                       <span
                         class="text-xs font-medium px-3 py-1 rounded-full"
                         :class="isJawabanBenar(item) ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'"
@@ -202,6 +212,85 @@
             </section>
           </div>
         </div>
+
+      <!-- FLOATING ACTION BUTTONS -->
+      <div
+        class="fixed bottom-6 right-6 flex flex-col items-end gap-3 z-40"
+        :class="{ 'opacity-0 pointer-events-none': showList }"
+      >
+        <button
+          @click="showList = true"
+          class="bg-[#1D546D] text-white pr-4 pl-3.5 py-2.5 rounded-full shadow-lg hover:bg-[#154053] hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 transition-all text-sm font-medium flex items-center gap-2 border border-[#1D546D]"
+        >
+          <svg class="w-4 h-4 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+          Daftar Jawaban
+        </button>
+
+        <button
+          @click="scrollToTop"
+          class="bg-yellow-400 text-white p-3 rounded-full shadow-lg hover:bg-yellow-500 ring-4 ring-yellow-100 hover:ring-yellow-200 transition-all flex items-center justify-center hover:-translate-y-0.5 active:translate-y-0 border border-yellow-500/50"
+        >
+          <svg class="w-5 h-5 drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- MODAL DAFTAR JAWABAN -->
+      <div
+        v-if="showList"
+        class="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm transition-opacity"
+        @click="showList = false"
+      >
+        <div
+          class="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[85vh] flex flex-col overflow-hidden transform scale-100 transition-transform"
+          @click.stop
+        >
+          <div class="px-5 sm:px-6 py-4 border-b flex justify-between items-center bg-slate-50">
+            <div>
+              <h3 class="font-semibold text-lg text-slate-800">Daftar Jawaban</h3>
+              <p class="text-xs text-slate-500 mt-0.5">Pilih nomor untuk melihat pembahasan detail</p>
+            </div>
+            <button
+              @click="showList = false"
+              class="text-slate-400 hover:text-red-500 bg-white hover:bg-red-50 rounded-full p-2 transition-all border shadow-sm"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          </div>
+
+          <div class="p-4 sm:p-6 overflow-y-auto custom-scrollbar bg-slate-50/30">
+            <div class="space-y-6">
+              <div v-for="(items, komponen) in groupedNavigasi" :key="komponen" class="space-y-3">
+                <div class="flex items-center gap-2">
+                  <div class="h-2 w-2 rounded-full bg-[#1D546D]"></div>
+                  <h4 class="text-sm font-semibold text-slate-700">{{ komponen }}</h4>
+                </div>
+
+                <div class="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 gap-2 sm:gap-3">
+                  <button
+                    v-for="n in items"
+                    :key="n.nomor"
+                    @click="scrollToSoal(n.nomor)"
+                    class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg flex items-center justify-center text-white font-medium hover:scale-105 hover:shadow-md transition-all border"
+                    :class="{
+                      'bg-emerald-500 border-emerald-600': n.status === 'benar',
+                      'bg-red-500 border-red-600': n.status === 'salah',
+                      'bg-slate-300 border-slate-400 text-slate-700': n.status === 'kosong'
+                    }"
+                  >
+                    {{ n.nomor }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       </main>
     </div>
   </div>
@@ -245,6 +334,20 @@ const groupedNavigasi = computed(() => {
 })
 const pembahasanData = ref([])
 const root = ref(null) // reference to main wrapper for KaTeX
+
+const showList = ref(false)
+
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: "smooth" })
+}
+
+const scrollToSoal = (soalNomor) => {
+  const element = document.getElementById(`soal-${soalNomor}`)
+  if (element) {
+    element.scrollIntoView({ behavior: "smooth", block: "start" })
+  }
+  showList.value = false
+}
 
 const loading = ref(true)
 const PEMBAHASAN_ENDPOINT = `/user/tryout/hasil/${id}/pembahasan`
