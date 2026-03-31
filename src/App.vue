@@ -29,7 +29,7 @@
 import { onMounted, computed } from "vue"
 import { RouterView, useRouter, useRoute } from "vue-router"
 import { useUserStore } from "@/stores/userStore"
-import Login from "./pages/autentifikasi/login.vue"
+import Login from "./pages/autentifikasi/Login.vue"
 import Isiformawal from "./pages/autentifikasi/Isiformawal.vue"
 import EventInfo from "./pages/event/EventInfo.vue"
 
