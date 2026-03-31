@@ -1,11 +1,11 @@
 <template>
   <!-- root wrapper (use div instead of body so KaTeX can target it reliably) -->
-  <div ref="root" class="bg-bgsoft font-poppins">
-    <div class="flex min-h-screen">
+  <div ref="root" class="bg-bgsoft font-poppins overflow-hidden">
+    <div class="flex min-h-screen w-full">
       <Sidebar></Sidebar>
 
       <!-- ================= MAIN ================= -->
-      <main class="flex-1">
+      <main class="flex-1 min-w-0 overflow-x-hidden">
         <!-- Topbar -->
         <header class="bg-white border-b px-4 md:px-6 py-4">
           <h1 class="text-lg font-semibold text-slate-800">Hasil Tryout</h1>
