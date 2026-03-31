@@ -38,8 +38,8 @@
             <!-- ================= SUMMARY NILAI ================= -->
             <section class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
               <div class="bg-white rounded-xl border p-4 text-center">
-                <p class="text-sm text-slate-500">Nilai Poin</p>
-                <p class="text-3xl font-bold text-primary mt-1">{{ ringkasan.nilai_poin }}</p>
+                <p class="text-sm text-slate-500">Skor IRT</p>
+                <p class="text-3xl font-bold text-primary mt-1">{{ ringkasan.nilai_irt }}</p>
               </div>
 
               <div class="bg-white rounded-xl border p-4 text-center">
@@ -314,7 +314,7 @@ const id = route.params.id
 
 const hasil = ref(null)
 const ringkasan = ref({
-  nilai_poin: 0,
+  nilai_irt: 0,
   benar: 0,
   salah: 0,
   kosong: 0
@@ -499,7 +499,7 @@ const loadRingkasan = async () => {
   console.log("Hasil tryout data:", res)
 
   hasil.value = res.data
-  ringkasan.value.nilai_poin = res.data.nilai_poin
+  ringkasan.value.nilai_irt = res.data.nilai_irt
   ringkasan.value.benar = res.data.benar
   ringkasan.value.salah = res.data.salah
   ringkasan.value.kosong = res.data.kosong
