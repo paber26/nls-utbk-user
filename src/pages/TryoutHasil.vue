@@ -58,12 +58,7 @@
             </section>
 
             <!-- ================= SUMMARY NILAI ================= -->
-            <section class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-              <div class="bg-white rounded-xl border p-4 text-center">
-                <p class="text-sm text-slate-500">Rata-rata Skor IRT</p>
-                <p class="text-3xl font-bold text-primary mt-1">{{ ringkasan.nilai_irt }}</p>
-              </div>
-
+            <section class="grid grid-cols-3 gap-4 mb-6">
               <div class="bg-white rounded-xl border p-4 text-center">
                 <p class="text-sm text-slate-500">Benar</p>
                 <p class="text-3xl font-bold text-emerald-600 mt-1">{{ ringkasan.benar }}</p>
@@ -80,17 +75,23 @@
               </div>
             </section>
 
-            <!-- ================= SKOR KOMPONEN ================= -->
-            <section v-if="ringkasan.skor_komponen && ringkasan.skor_komponen.length" class="mb-6">
-              <h3 class="font-semibold text-slate-800 mb-3">Nilai per Komponen</h3>
-              <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                <div 
-                  v-for="(komponen, idx) in ringkasan.skor_komponen" 
-                  :key="idx" 
-                  class="bg-white rounded-xl border p-4 text-center shadow-sm flex flex-col justify-center min-h-[90px]"
-                >
-                  <p class="text-[11px] sm:text-xs text-slate-500 font-medium mb-1 uppercase tracking-wide leading-tight flex-1 flex items-center justify-center">{{ komponen.nama }}</p>
-                  <p class="text-2xl font-bold text-[#1D546D]">{{ komponen.skor }}</p>
+            <!-- ================= SKOR KOMPONEN (SERTIFIKAT) ================= -->
+            <section v-if="ringkasan.skor_komponen && ringkasan.skor_komponen.length" class="mb-6 flex justify-center">
+              <div class="bg-white rounded p-8 md:p-12 shadow-sm border border-gray-200 w-full font-serif text-slate-800">
+                <div class="space-y-6">
+                  <div v-for="(group, gIdx) in groupedKomponen" :key="gIdx">
+                    <h4 class="font-bold text-[15px] mb-2 leading-tight">{{ group.title }}</h4>
+                    <div class="space-y-1 pl-0">
+                      <div 
+                        v-for="(komponen, idx) in group.items" 
+                        :key="idx" 
+                        class="flex justify-between items-center text-[15px]"
+                      >
+                        <span class="text-slate-800">{{ komponen.nama }}</span>
+                        <span class="ml-4 tabular-nums">{{ String(komponen.skor).replace('.', ',') }}</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </section>
@@ -334,7 +335,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref, watch, nextTick } from "vue"
+import { ref, computed, onMounted, onUnmounted, watch, nextTick } from "vue"
 import { RouterLink } from "vue-router"
 import { useRoute } from "vue-router"
 
@@ -356,6 +357,45 @@ const ringkasan = ref({
   benar: 0,
   salah: 0,
   kosong: 0
+})
+
+const groupedKomponen = computed(() => {
+  if (!ringkasan.value.skor_komponen) return []
+
+  const tpsKeywords = ['penalaran umum', 'kuantitatif', 'pemahaman umum', 'bacaan dan menulis']
+  const literasiKeywords = ['literasi']
+  const pmKeywords = ['penalaran matematika']
+
+  const groups = [
+    { title: 'Nilai TPS', items: [] },
+    { title: 'Nilai Tes Literasi', items: [] },
+    { title: 'Nilai Penalaran Matematika', items: [] },
+    { title: 'Nilai TKA', items: [] },
+    { title: 'Nilai Komponen Lainnya', items: [] }
+  ]
+
+  ringkasan.value.skor_komponen.forEach(k => {
+    const nameStr = k.nama.toLowerCase()
+    if (tpsKeywords.some(kw => nameStr.includes(kw))) {
+      groups[0].items.push(k)
+    } else if (literasiKeywords.some(kw => nameStr.includes(kw))) {
+      groups[1].items.push(k)
+    } else if (pmKeywords.some(kw => nameStr.includes(kw))) {
+      groups[2].items.push(k)
+    } else if (nameStr.includes('tka') || nameStr.includes('saintek') || nameStr.includes('soshum') || nameStr.includes('matematika ipa') || nameStr.includes('fisika') || nameStr.includes('kimia') || nameStr.includes('biologi')) {
+      groups[3].items.push(k)
+    } else {
+      groups[4].items.push(k)
+    }
+  })
+
+  // jika hanya ada 1 grup dan itu grup "lainnya", jangan tampilkan judul grup agar lebih clean
+  const activeGroups = groups.filter(g => g.items.length > 0)
+  if (activeGroups.length === 1 && activeGroups[0].title === 'Nilai Komponen Lainnya') {
+    activeGroups[0].title = 'Rincian Komponen'
+  }
+
+  return activeGroups
 })
 const navigasi = ref([])
 
