@@ -99,7 +99,7 @@
           <div class="animate-spin rounded-full h-8 w-8 border-4 border-[#1D546D] border-t-transparent"></div>
         </div>
         <div v-else ref="contentContainer" :key="'question-container-' + currentNumber">
-          <div ref="soalContainer" :class="fontSize" class="leading-relaxed mb-6" v-html="soalText"></div>
+          <div ref="soalContainer" :class="[fontSize, 'prose prose-sm max-w-none px-0 leading-relaxed mb-6 text-slate-800']" v-html="soalText"></div>
 
           <!-- Pilihan Ganda -->
           <div v-if="tipeSoal === 'pg'" key="ans-pg" class="space-y-5">
@@ -123,7 +123,7 @@
                   >
                     {{ String.fromCharCode(65 + index) }}
                   </div>
-                  <div :class="fontSize" class="leading-relaxed" v-html="opt.text"></div>
+                  <div :class="[fontSize, 'prose prose-sm max-w-none leading-relaxed text-slate-700']" v-html="opt.text"></div>
                 </div>
               </label>
             </div>
@@ -150,7 +150,7 @@
                   >
                     {{ String.fromCharCode(65 + index) }}
                   </div>
-                  <div :class="fontSize" class="leading-relaxed" v-html="opt.text"></div>
+                  <div :class="[fontSize, 'prose prose-sm max-w-none leading-relaxed text-slate-700']" v-html="opt.text"></div>
                 </div>
               </label>
             </div>
@@ -165,39 +165,37 @@
             >
               <div class="flex items-start gap-4">
                 <div
-                  class="w-8 h-8 flex items-center justify-center rounded-full bg-[#F3F4F4] text-[#1D546D] font-semibold"
+                  class="w-8 h-8 flex-shrink-0 flex items-center justify-center rounded-full bg-[#F3F4F4] text-[#1D546D] font-bold text-sm"
                 >
-                  {{ String.fromCharCode(65 + index) }}
+                  {{ index + 1 }}
                 </div>
 
-                <div class="flex-1">
-                  <p :class="fontSize" class="mb-3 leading-relaxed">
-                    {{ opt.text }}
-                  </p>
+                <div class="flex-1 min-w-0">
+                  <div :class="[fontSize, 'prose prose-sm max-w-none mb-3 leading-relaxed text-slate-800']" v-html="opt.text"></div>
 
-                  <div class="flex gap-8">
-                    <label class="flex items-center gap-2 cursor-pointer">
+                  <div class="flex gap-8 px-1">
+                    <label class="flex items-center gap-2 cursor-pointer group">
                       <input
                         type="radio"
                         :name="'pgk-' + opt.key"
                         value="1"
                         v-model="answersMap[currentNumber][opt.key]"
                         @change="onAnswerChange"
-                        class="accent-green-600"
+                        class="accent-green-600 w-4 h-4"
                       />
-                      <span class="text-green-600 font-medium">Benar</span>
+                      <span class="text-sm text-slate-600 group-hover:text-green-600 transition font-medium">Benar</span>
                     </label>
 
-                    <label class="flex items-center gap-2 cursor-pointer">
+                    <label class="flex items-center gap-2 cursor-pointer group">
                       <input
                         type="radio"
                         :name="'pgk-' + opt.key"
                         value="0"
                         v-model="answersMap[currentNumber][opt.key]"
                         @change="onAnswerChange"
-                        class="accent-red-600"
+                        class="accent-red-600 w-4 h-4"
                       />
-                      <span class="text-red-600 font-medium">Salah</span>
+                      <span class="text-sm text-slate-600 group-hover:text-red-600 transition font-medium">Salah</span>
                     </label>
                   </div>
                 </div>
