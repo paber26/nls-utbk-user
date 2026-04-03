@@ -279,8 +279,15 @@
       </div>
     </div>
 
+    <!-- Transition Loading Popup -->
+    <div v-if="showTransitionLoading" class="fixed inset-0 bg-[#061E29] flex flex-col items-center justify-center z-[100] text-center px-4">
+      <div class="w-16 h-16 border-4 border-slate-600 border-t-[#5F9598] rounded-full animate-spin mb-6 mx-auto"></div>
+      <h3 class="text-2xl font-bold text-white mb-2">Menyiapkan Subtes Selanjutnya</h3>
+      <p class="text-slate-400">Mohon tunggu sebentar... ({{ transitionCountdown }} detik)</p>
+    </div>
+
     <!-- Global Alert Popup -->
-    <div v-if="showAlertPopup" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div v-if="showAlertPopup" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[110]">
       <div class="bg-white rounded-xl p-6 w-full max-w-md text-center shadow-xl">
         <h3 class="text-lg font-semibold mb-3" :class="alertType === 'success' ? 'text-green-600' : 'text-red-600'">
           {{ alertType === "success" ? "Berhasil" : "Terjadi Kesalahan" }}
@@ -336,6 +343,9 @@ const showAlertPopup = ref(false)
 const alertMessage = ref("")
 const alertType = ref("success") // success | error
 const endTryoutAfterAlert = ref(false)
+
+const showTransitionLoading = ref(false)
+const transitionCountdown = ref(10)
 
 const pesertaNama = ref("")
 const options = ref([])
@@ -825,6 +835,19 @@ async function moveToNextKomponen() {
   loadingNext.value = true
   
   try {
+    showTransitionLoading.value = true
+    transitionCountdown.value = 10
+
+    await new Promise((resolve) => {
+      const interval = setInterval(() => {
+        transitionCountdown.value--
+        if (transitionCountdown.value <= 0) {
+          clearInterval(interval)
+          resolve()
+        }
+      }, 1000)
+    })
+
     const res = await api.post(`/user/tryout/${tryoutId}/next-komponen`)
     
     if (res.data.is_finished) {
@@ -848,6 +871,7 @@ async function moveToNextKomponen() {
     console.error(e)
   } finally {
     loadingNext.value = false
+    showTransitionLoading.value = false
   }
 }
 
