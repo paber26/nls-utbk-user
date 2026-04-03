@@ -19,10 +19,10 @@
           <div class="relative z-10 text-center text-white px-12 py-16 flex flex-col items-center">
             <div class="text-7xl mb-6 animate-bounce">📘</div>
 
-            <h1 class="text-5xl font-extrabold mb-4 tracking-tight">Fokus UTBK</h1>
+            <h1 class="text-5xl font-extrabold mb-4 tracking-tight">Fokus SNBT</h1>
 
             <p class="text-white/90 text-lg leading-relaxed mb-10 max-w-2xl">
-              Halaman ini disiapkan sebagai pusat strategi belajar UTBK. Kamu akan diarahkan untuk belajar berdasarkan
+              Halaman ini disiapkan sebagai pusat strategi belajar SNBT. Kamu akan diarahkan untuk belajar berdasarkan
               subtes, tingkat kesulitan, dan target kampus, bukan sekadar mengerjakan soal sebanyak mungkin.
             </p>
 
@@ -45,7 +45,7 @@
             </div>
 
             <div class="bg-white text-[#1D546D] font-semibold px-8 py-3 rounded-full shadow-lg">
-              Segera jadi pusat strategi belajar UTBK
+              Segera jadi pusat strategi belajar SNBT
             </div>
           </div>
         </div>

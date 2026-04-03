@@ -12,7 +12,7 @@ import Peringkat from "../pages/Peringkat.vue"
 import Editprofil from "../pages/EditProfil.vue"
 import TryoutHasil from "../pages/TryoutHasil.vue"
 import FokusTka from "../pages/FokusTka.vue"
-import FokusUtbk from "../pages/FokusUtbk.vue"
+import FokusSnbt from "../pages/FokusSnbt.vue"
 
 const routes = [
   {
@@ -57,9 +57,9 @@ const routes = [
     component: FokusTka
   },
   {
-    path: "/fokus-utbk",
-    name: "FokusUtbk",
-    component: FokusUtbk
+    path: "/fokus-snbt",
+    name: "FokusSnbt",
+    component: FokusSnbt
   },
   {
     path: "/about",

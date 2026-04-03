@@ -17,14 +17,14 @@
               />
               <div>
                 <p class="text-xs uppercase tracking-[0.26em] text-white/60">Next Level Study</p>
-                <p class="text-sm font-medium text-[#5F9598]">Platform Persiapan UTBK</p>
+                <p class="text-sm font-medium text-[#5F9598]">Platform Persiapan SNBT</p>
               </div>
             </div>
 
             <div class="mt-14 max-w-2xl animate-slide-up" style="animation-delay: 0.1s;">
               <p class="text-sm uppercase tracking-[0.28em] text-[#5F9598]">Simulasi yang terarah</p>
               <h1 class="mt-4 text-4xl font-bold leading-tight md:text-5xl xl:text-[3.5rem]">
-                Latihan UTBK yang terasa seperti dashboard belajar, bukan sekadar halaman login
+                Latihan SNBT yang terasa seperti dashboard belajar, bukan sekadar halaman login
               </h1>
               <p class="mt-6 max-w-xl text-base leading-relaxed text-white/74 md:text-lg">
                 Masuk untuk mengakses tryout, membaca analisis hasil, dan menyusun ritme belajar menuju target skor SNBT
@@ -90,7 +90,7 @@
           <div class="rounded-[2.5rem] border border-slate-200/60 bg-white p-8 sm:p-10 shadow-[0_24px_60px_rgba(6,30,41,0.06)]">
             <div class="mb-10">
               <p class="text-sm font-semibold uppercase tracking-[0.28em] text-[#5F9598]">Login Peserta</p>
-              <h2 class="mt-4 text-3xl sm:text-4xl font-bold text-[#061E29]">Masuk ke dashboard UTBK</h2>
+              <h2 class="mt-4 text-3xl sm:text-4xl font-bold text-[#061E29]">Masuk ke dashboard SNBT</h2>
               <p class="mt-4 text-sm sm:text-base leading-relaxed text-slate-500">
                 Gunakan email terdaftar atau lanjutkan dengan Google untuk mengakses akun tryout kamu.
               </p>
@@ -265,11 +265,11 @@ const sellingPoints = [
   "Akses tryout aktif dan batch berikutnya",
   "Ringkasan hasil lengkap dengan pembahasan",
   "Monitoring progres dari satu dashboard",
-  "Persiapan subtes UTBK dalam alur yang rapi"
+  "Persiapan subtes SNBT dalam alur yang rapi"
 ]
 
 const accessItems = [
-  "Paket tryout UTBK dan simulasi penuh",
+  "Paket tryout SNBT dan simulasi penuh",
   "Hasil pengerjaan, pembahasan, dan ringkasan jawaban",
   "Target belajar, roadmap, dan fokus subtes"
 ]

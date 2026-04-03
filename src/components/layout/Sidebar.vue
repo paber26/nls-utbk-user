@@ -4,12 +4,12 @@
     <!-- Logo -->
     <div class="px-6 py-5 border-b border-white/10">
       <p class="text-xs uppercase tracking-[0.3em] text-white/55">Next Level Study</p>
-      <p class="text-lg font-semibold text-white mt-1">UTBK Hub</p>
+      <p class="text-lg font-semibold text-white mt-1">SNBT Hub</p>
     </div>
 
     <!-- User Info -->
     <div class="px-6 py-4 border-b border-white/10">
-      <p class="text-xs text-white/55">Peserta UTBK</p>
+      <p class="text-xs text-white/55">Peserta SNBT</p>
       <p class="font-medium">
         {{ user?.nama_lengkap || user?.name || "Memuat..." }}
       </p>
@@ -33,16 +33,16 @@
         :class="isTryoutRoute ? 'bg-sideover text-white' : 'hover:bg-sideover text-slate-300'"
       >
         📝
-        <span>Tryout UTBK</span>
+        <span>Tryout SNBT</span>
       </RouterLink>
 
       <RouterLink
-        to="/fokus-utbk"
+        to="/fokus-snbt"
         class="flex items-center gap-3 px-4 py-3 rounded-lg transition"
-        :class="$route.path === '/fokus-utbk' ? 'bg-sideover text-white' : 'hover:bg-sideover text-slate-300'"
+        :class="$route.path === '/fokus-snbt' ? 'bg-sideover text-white' : 'hover:bg-sideover text-slate-300'"
       >
         📘
-        <span>Fokus UTBK</span>
+        <span>Fokus SNBT</span>
       </RouterLink>
 
       <RouterLink

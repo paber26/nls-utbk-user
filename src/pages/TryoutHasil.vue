@@ -191,7 +191,7 @@
               </div>
 
               <div v-else class="rounded-xl border border-slate-200 bg-slate-50 px-4 py-6 text-center">
-                <p class="text-slate-700 font-medium">Terima kasih sudah mengikuti simulasi UTBK di Next Level Study</p>
+                <p class="text-slate-700 font-medium">Terima kasih sudah mengikuti simulasi SNBT di Next Level Study</p>
               </div>
             </section>
 
@@ -363,7 +363,7 @@ const canShowPembahasan = computed(() => {
 
 const badgeLabel = computed(() => {
   const kategori = hasil.value?.kategori || hasil.value?.mapel || hasil.value?.subtest
-  return kategori ? `UTBK • ${kategori}` : "Simulasi UTBK"
+  return kategori ? `SNBT • ${kategori}` : "Simulasi SNBT"
 })
 
 const extractPembahasanArray = (payload) => {

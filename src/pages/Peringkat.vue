@@ -17,7 +17,7 @@
           <div class="relative bg-white rounded-3xl shadow-2xl p-12 text-center max-w-2xl w-full border">
             <div class="text-6xl mb-6 animate-bounce">🏆</div>
 
-            <h1 class="text-4xl font-bold text-slate-800 mb-4">Peringkat Simulasi UTBK</h1>
+            <h1 class="text-4xl font-bold text-slate-800 mb-4">Peringkat Simulasi SNBT</h1>
 
             <p class="text-slate-500 text-lg leading-relaxed mb-8">
               Kami sedang menyiapkan leaderboard yang menampilkan peringkat per paket, per subtes, dan per batch agar

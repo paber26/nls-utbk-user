@@ -11,9 +11,9 @@
             <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(95,149,152,0.28),_transparent_30%),radial-gradient(circle_at_bottom_right,_rgba(29,84,109,0.24),_transparent_34%)]"></div>
             <div class="relative px-8 py-10 md:px-10 md:py-12 grid lg:grid-cols-[1.5fr_1fr] gap-8 items-center">
               <div>
-                <p class="text-sm uppercase tracking-[0.3em] text-[#5F9598]">Next Level Study UTBK</p>
+                <p class="text-sm uppercase tracking-[0.3em] text-[#5F9598]">Next Level Study SNBT</p>
                 <h1 class="mt-4 text-3xl md:text-5xl font-bold leading-tight">
-                  Platform latihan UTBK untuk bantu kamu tembus PTN target
+                  Platform latihan SNBT untuk bantu kamu tembus PTN target
                 </h1>
                 <p class="mt-4 max-w-2xl text-slate-300 text-base md:text-lg leading-relaxed">
                   Fokus pada tryout terukur, evaluasi subtes, dan strategi belajar yang realistis supaya progresmu
@@ -28,7 +28,7 @@
                     Mulai Tryout
                   </RouterLink>
                   <RouterLink
-                    to="/fokus-utbk"
+                    to="/fokus-snbt"
                     class="px-5 py-3 rounded-xl border border-white/20 text-white hover:bg-white/10 transition"
                   >
                     Lihat Strategi Belajar

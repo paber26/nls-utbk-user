@@ -14,7 +14,7 @@
           >
             <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
               <div class="max-w-2xl">
-                <p class="text-sm uppercase tracking-[0.28em] text-[#5F9598]">Simulasi UTBK</p>
+                <p class="text-sm uppercase tracking-[0.28em] text-[#5F9598]">Simulasi SNBT</p>
                 <h2 class="mt-3 text-2xl md:text-3xl font-bold">Pilih paket tryout yang paling relevan dengan targetmu</h2>
                 <p class="mt-3 text-slate-300 leading-relaxed">
                   Kerjakan paket per subtes untuk drilling, lalu lanjutkan ke simulasi penuh saat ritme dan akurasi
@@ -125,7 +125,7 @@
           <section v-else class="bg-white border rounded-2xl p-10 text-center">
             <p class="text-lg font-semibold text-slate-800">Belum ada paket untuk filter ini</p>
             <p class="mt-2 text-sm text-slate-500">
-              Coba pilih filter lain atau tunggu batch tryout UTBK berikutnya dibuka.
+              Coba pilih filter lain atau tunggu batch tryout SNBT berikutnya dibuka.
             </p>
           </section>
 
@@ -135,7 +135,7 @@
               <div>
                 <h2 class="text-xl font-semibold text-slate-800">🚀 Tryout Segera Hadir</h2>
                 <p class="text-sm text-slate-500 mt-1">
-                  Batch berikutnya disiapkan untuk simulasi penuh UTBK, paket literasi, dan drilling penalaran
+                  Batch berikutnya disiapkan untuk simulasi penuh SNBT, paket literasi, dan drilling penalaran
                   matematika. Pantau terus agar tidak tertinggal pembukaan aksesnya.
                 </p>
               </div>
@@ -191,7 +191,7 @@ const tryouts = ref([])
 const dummyUpcoming = [
   {
     id: "upcoming-1",
-    nama: "Simulasi Penuh UTBK 01",
+    nama: "Simulasi Penuh SNBT 01",
     mapel: "Multi Subtes",
     kategori: "Full Test",
     jumlah_soal: 30,
@@ -259,7 +259,7 @@ const filteredTryouts = computed(() => {
 
 const getItemBadge = (item) => {
   const level = item.jenjang || item.kategori || "Simulasi"
-  const mapel = item.mapel || item.subtest || "UTBK"
+  const mapel = item.mapel || item.subtest || "SNBT"
   return `${level} • ${mapel}`
 }
 

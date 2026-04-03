@@ -11,10 +11,10 @@
         </div>
       </div>
 
-      <h1 class="text-2xl md:text-3xl font-bold text-slate-800 mb-4">Aktivasi Program UTBK Next Level Study</h1>
+      <h1 class="text-2xl md:text-3xl font-bold text-slate-800 mb-4">Aktivasi Program SNBT Next Level Study</h1>
 
       <p class="text-slate-600 leading-relaxed mb-6">
-        Akun Anda belum dihubungkan ke batch tryout atau program UTBK Next Level Study yang sedang berjalan.
+        Akun Anda belum dihubungkan ke batch tryout atau program SNBT Next Level Study yang sedang berjalan.
       </p>
 
       <div class="text-left space-y-4 text-slate-700">
@@ -47,7 +47,7 @@
       </div>
 
       <div class="mt-8 p-4 bg-[#F3F4F4] rounded-lg text-sm text-[#1D546D]">
-        Setelah akun aktif, Anda dapat langsung mengerjakan tryout UTBK dan memantau progres persiapan SNBT.
+        Setelah akun aktif, Anda dapat langsung mengerjakan tryout SNBT dan memantau progres persiapan SNBT.
       </div>
 
       <div class="mt-6 text-center">
