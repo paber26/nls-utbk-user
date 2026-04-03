@@ -9,12 +9,10 @@
         @click="showSidebar = false"
       ></div>
 
-      <div 
-        class="fixed inset-y-0 left-0 z-50 transform transition-transform lg:static lg:translate-x-0 h-full"
+      <Sidebar 
+        class="fixed inset-y-0 left-0 z-50 transform transition-transform lg:static lg:translate-x-0"
         :class="showSidebar ? 'translate-x-0' : '-translate-x-full'"
-      >
-        <Sidebar class="h-full"></Sidebar>
-      </div>
+      ></Sidebar>
 
       <!-- ================= MAIN ================= -->
       <main class="flex-1 min-w-0 overflow-x-hidden">
