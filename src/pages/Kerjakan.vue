@@ -857,18 +857,20 @@ async function moveToNextKomponen() {
   loadingNext.value = true
   
   try {
-    showTransitionLoading.value = true
-    transitionCountdown.value = 10
+    if (!isLastKomponen.value) {
+      showTransitionLoading.value = true
+      transitionCountdown.value = 10
 
-    await new Promise((resolve) => {
-      const interval = setInterval(() => {
-        transitionCountdown.value--
-        if (transitionCountdown.value <= 0) {
-          clearInterval(interval)
-          resolve()
-        }
-      }, 1000)
-    })
+      await new Promise((resolve) => {
+        const interval = setInterval(() => {
+          transitionCountdown.value--
+          if (transitionCountdown.value <= 0) {
+            clearInterval(interval)
+            resolve()
+          }
+        }, 1000)
+      })
+    }
 
     const res = await api.post(`/user/tryout/${tryoutId}/next-komponen`)
     
@@ -876,7 +878,7 @@ async function moveToNextKomponen() {
       localStorage.removeItem(STORAGE_KEY)
       localStorage.removeItem(WARNING_KEY)
       alertType.value = "success"
-      alertMessage.value = "Tryout berhasil diselesaikan!"
+      alertMessage.value = "Selamat, tryout berhasil diakhiri"
       showAlertPopup.value = true
     } else {
       // Pindah ke komponen selanjutnya
