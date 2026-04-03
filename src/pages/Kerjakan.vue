@@ -7,7 +7,7 @@
     >
       <div class="p-4 font-bold text-[#1D546D] border-b bg-slate-50 flex items-center justify-between">
         <span>Daftar Soal</span>
-        <span class="text-xs font-normal text-slate-500 bg-white border px-2 py-0.5 rounded">{{ totalSoal }} Total</span>
+        <span class="text-xs font-normal text-slate-500 bg-white border px-2 py-0.5 rounded">{{ soalListDalamKomponen.length }} Total</span>
       </div>
       <div class="p-4 overflow-y-auto flex-1 space-y-6">
         <div v-if="activeKomponenNama && groupedSoalList[activeKomponenNama]">
@@ -19,13 +19,13 @@
           </div>
           <div class="grid grid-cols-5 gap-2">
             <button
-              v-for="n in groupedSoalList[activeKomponenNama].items"
+              v-for="(n, displayIndex) in groupedSoalList[activeKomponenNama].items"
               :key="n"
               class="relative w-10 h-10 rounded border text-sm font-semibold transition-all hover:brightness-95 hover:shadow-sm"
               :class="statusClass(n)"
               @click="openQuestion(n)"
             >
-              {{ n }}
+              {{ displayIndex + 1 }}
               <span v-if="opened[n]" class="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-slate-200 border border-white"></span>
             </button>
           </div>
@@ -54,7 +54,7 @@
             Peserta:
             <span class="font-medium text-slate-700">{{ pesertaNama }}</span>
           </div>
-          <h2 class="text-lg font-semibold">Soal nomor {{ currentNumber }}</h2>
+          <h2 class="text-lg font-semibold">Soal nomor {{ Math.max(0, soalListDalamKomponen.indexOf(currentNumber)) + 1 }}</h2>
           <div class="text-sm text-slate-500">
             Ukuran font soal:
             <button class="mx-1" @click="fontSize = 'text-sm'">A</button>
