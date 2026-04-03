@@ -9,25 +9,39 @@
         <span>Daftar Soal</span>
         <span class="text-xs font-normal text-slate-500 bg-white border px-2 py-0.5 rounded">{{ soalListDalamKomponen.length }} Total</span>
       </div>
-      <div class="p-4 overflow-y-auto flex-1 space-y-6">
-        <div v-if="activeKomponenNama && groupedSoalList[activeKomponenNama]">
-          <div class="mb-3 text-sm font-semibold text-slate-700 flex items-center justify-between">
-            <div class="flex items-center gap-2">
-               <div class="w-1.5 h-1.5 rounded-full bg-[#1D546D]"></div>
-               <span class="leading-tight">{{ activeKomponenNama }}</span>
-            </div>
-          </div>
-          <div class="grid grid-cols-5 gap-2">
-            <button
-              v-for="(n, displayIndex) in groupedSoalList[activeKomponenNama].items"
-              :key="n"
-              class="relative w-10 h-10 rounded border text-sm font-semibold transition-all hover:brightness-95 hover:shadow-sm"
-              :class="statusClass(n)"
-              @click="openQuestion(n)"
+      <div class="p-4 overflow-y-auto flex-1 space-y-4">
+        <div v-if="Object.keys(groupedSoalList).length > 0">
+          <div 
+            v-for="(group, key) in groupedSoalList" 
+            :key="key"
+            class="mb-6 rounded-lg transition-all"
+            :class="activeKomponenNama === key ? 'bg-slate-50 border border-slate-200 p-3 shadow-sm' : 'px-3 opacity-60'"
+          >
+            <!-- Header Komponen -->
+            <div 
+              class="flex items-center justify-between mb-3"
+              :class="activeKomponenNama === key ? 'text-[#1D546D] font-bold' : 'text-slate-500 font-medium'"
             >
-              {{ displayIndex + 1 }}
-              <span v-if="opened[n]" class="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-slate-200 border border-white"></span>
-            </button>
+              <div class="flex items-center gap-2 text-sm">
+                <div class="w-1.5 h-1.5 rounded-full" :class="activeKomponenNama === key ? 'bg-[#1D546D]' : 'bg-slate-300'"></div>
+                <span class="leading-tight">{{ key }}</span>
+              </div>
+              <span v-if="activeKomponenNama === key" class="text-[10px] bg-[#1D546D] text-white font-bold px-2 py-0.5 rounded-full uppercase tracking-wide">Aktif</span>
+            </div>
+
+            <!-- Grid Soal (Hanya muncul untuk komponen yang aktif) -->
+            <div v-if="activeKomponenNama === key" class="grid grid-cols-5 gap-2">
+              <button
+                v-for="(n, displayIndex) in group.items"
+                :key="n"
+                class="relative w-10 h-10 rounded border text-sm font-semibold transition-all hover:brightness-95 hover:shadow-sm"
+                :class="statusClass(n)"
+                @click="openQuestion(n)"
+              >
+                {{ displayIndex + 1 }}
+                <span v-if="opened[n]" class="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-slate-200 border border-white"></span>
+              </button>
+            </div>
           </div>
         </div>
         <div v-else class="text-center text-slate-400 text-sm py-10">
