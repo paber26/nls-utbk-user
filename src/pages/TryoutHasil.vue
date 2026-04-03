@@ -1,15 +1,39 @@
 <template>
   <!-- root wrapper (use div instead of body so KaTeX can target it reliably) -->
   <div ref="root" class="bg-bgsoft font-poppins overflow-hidden">
-    <div class="flex min-h-screen w-full">
-      <Sidebar></Sidebar>
+    <div class="flex min-h-screen w-full relative">
+      <!-- Mobile Sidebar Overlay -->
+      <div 
+        v-if="showSidebar" 
+        class="fixed inset-0 bg-black/50 z-40 lg:hidden"
+        @click="showSidebar = false"
+      ></div>
+
+      <div 
+        class="fixed inset-y-0 left-0 z-50 transform transition-transform lg:static lg:translate-x-0 h-full"
+        :class="showSidebar ? 'translate-x-0' : '-translate-x-full'"
+      >
+        <Sidebar class="h-full"></Sidebar>
+      </div>
 
       <!-- ================= MAIN ================= -->
       <main class="flex-1 min-w-0 overflow-x-hidden">
         <!-- Topbar -->
-        <header class="bg-white border-b px-4 md:px-6 py-4">
-          <h1 class="text-lg font-semibold text-slate-800">Hasil Tryout</h1>
-          <p class="text-sm text-slate-500">Ringkasan hasil pengerjaan tryout</p>
+        <header class="bg-white border-b px-4 md:px-6 py-4 flex items-center gap-4">
+          <!-- Hamburger Menu for Mobile -->
+          <button 
+            @click="showSidebar = true"
+            class="lg:hidden p-2 -ml-2 text-slate-500 hover:text-slate-800 transition"
+          >
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+
+          <div>
+            <h1 class="text-lg font-semibold text-slate-800">Hasil Tryout</h1>
+            <p class="text-sm text-slate-500">Ringkasan hasil pengerjaan tryout</p>
+          </div>
         </header>
 
         <!-- Content -->
@@ -310,8 +334,8 @@ import "katex/dist/katex.min.css"
 
 const route = useRoute()
 const id = route.params.id
-// console.log("ini attempt id", attemptId)
 
+const showSidebar = ref(false)
 const hasil = ref(null)
 const ringkasan = ref({
   nilai_irt: 0,
