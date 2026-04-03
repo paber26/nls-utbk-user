@@ -60,7 +60,7 @@
             <!-- ================= SUMMARY NILAI ================= -->
             <section class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
               <div class="bg-white rounded-xl border p-4 text-center">
-                <p class="text-sm text-slate-500">Skor IRT</p>
+                <p class="text-sm text-slate-500">Rata-rata Skor IRT</p>
                 <p class="text-3xl font-bold text-primary mt-1">{{ ringkasan.nilai_irt }}</p>
               </div>
 
@@ -77,6 +77,21 @@
               <div class="bg-white rounded-xl border p-4 text-center">
                 <p class="text-sm text-slate-500">Tidak Dijawab</p>
                 <p class="text-3xl font-bold text-slate-400 mt-1">{{ ringkasan.kosong }}</p>
+              </div>
+            </section>
+
+            <!-- ================= SKOR KOMPONEN ================= -->
+            <section v-if="ringkasan.skor_komponen && ringkasan.skor_komponen.length" class="mb-6">
+              <h3 class="font-semibold text-slate-800 mb-3">Nilai per Komponen</h3>
+              <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div 
+                  v-for="(komponen, idx) in ringkasan.skor_komponen" 
+                  :key="idx" 
+                  class="bg-white rounded-xl border p-4 text-center shadow-sm flex flex-col justify-center min-h-[90px]"
+                >
+                  <p class="text-[11px] sm:text-xs text-slate-500 font-medium mb-1 uppercase tracking-wide leading-tight flex-1 flex items-center justify-center">{{ komponen.nama }}</p>
+                  <p class="text-2xl font-bold text-[#1D546D]">{{ komponen.skor }}</p>
+                </div>
               </div>
             </section>
 
@@ -337,6 +352,7 @@ const showSidebar = ref(false)
 const hasil = ref(null)
 const ringkasan = ref({
   nilai_irt: 0,
+  skor_komponen: [],
   benar: 0,
   salah: 0,
   kosong: 0
@@ -522,6 +538,7 @@ const loadRingkasan = async () => {
 
   hasil.value = res.data
   ringkasan.value.nilai_irt = res.data.nilai_irt
+  ringkasan.value.skor_komponen = res.data.skor_komponen || []
   ringkasan.value.benar = res.data.benar
   ringkasan.value.salah = res.data.salah
   ringkasan.value.kosong = res.data.kosong
