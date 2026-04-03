@@ -122,9 +122,14 @@ onMounted(async () => {
 const logout = () => {
   // Hapus token
   localStorage.removeItem("auth_token")
+  localStorage.removeItem("token")
 
   // Reset store
-  userStore.$reset()
+  if (typeof userStore.clearUser === 'function') {
+    userStore.clearUser()
+  } else {
+    userStore.$reset()
+  }
 
   // Reload full page dan arahkan ke login
   window.location.href = "/login"

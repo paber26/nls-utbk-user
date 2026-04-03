@@ -29,7 +29,7 @@ onMounted(() => {
   const token = params.get("token")
 
   if (token) {
-    localStorage.setItem("token", token)
+    localStorage.setItem("auth_token", token)
     window.location.href = "/"
   } else {
     error.value = true

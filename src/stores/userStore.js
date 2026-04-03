@@ -19,12 +19,12 @@ export const useUserStore = defineStore("user", {
       const tokenFromUrl = params.get("token")
 
       if (tokenFromUrl) {
-        localStorage.setItem("token", tokenFromUrl)
+        localStorage.setItem("auth_token", tokenFromUrl)
         window.history.replaceState({}, document.title, window.location.pathname)
       }
 
       // Ambil token dari localStorage
-      const token = localStorage.getItem("token")
+      const token = localStorage.getItem("auth_token")
 
       if (token) {
         api.defaults.headers.common["Authorization"] = `Bearer ${token}`
