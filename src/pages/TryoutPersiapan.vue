@@ -12,7 +12,13 @@
         </header>
 
         <!-- Content -->
-        <div class="px-6 py-8 w-full">
+        <!-- Loading State -->
+        <div v-if="isLoading" class="px-6 py-12 w-full flex flex-col items-center justify-center min-h-[50vh]">
+          <div class="w-12 h-12 border-4 border-slate-200 border-t-[#1D546D] rounded-full animate-spin mb-4"></div>
+          <p class="text-slate-500 font-medium animate-pulse">Menyiapkan data tryout...</p>
+        </div>
+
+        <div v-else class="px-6 py-8 w-full">
           <div class="space-y-6">
             <!-- LEFT (2/3) -->
             <div class="lg:col-span-2 space-y-6">
@@ -159,6 +165,8 @@ import Sidebar from "../components/layout/Sidebar.vue"
 const route = useRoute()
 const router = useRouter()
 
+const isLoading = ref(true)
+
 const tryout = ref({
   nama: "",
   jenjang: "",
@@ -211,10 +219,15 @@ function formatTanggal(tanggal) {
 }
 
 async function fetchTryout() {
-  const res = await api.get(`/user/tryout/${route.params.id}`)
-  tryout.value = res.data.data
-  console.log("Tryout data:", res.data)
-  console.log(tryout.value)
+  try {
+    isLoading.value = true
+    const res = await api.get(`/user/tryout/${route.params.id}`)
+    tryout.value = res.data.data
+  } catch (error) {
+    console.error("Gagal memuat tryout:", error)
+  } finally {
+    isLoading.value = false
+  }
 }
 
 async function startTryout() {
