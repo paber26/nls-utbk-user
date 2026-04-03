@@ -17,7 +17,7 @@
                 <p class="text-sm uppercase tracking-[0.28em] text-[#5F9598]">Simulasi SNBT</p>
                 <h2 class="mt-3 text-2xl md:text-3xl font-bold">Pilih paket tryout yang paling relevan dengan targetmu</h2>
                 <p class="mt-3 text-slate-300 leading-relaxed">
-                  Kerjakan paket per subtes untuk drilling, lalu lanjutkan ke simulasi penuh saat ritme dan akurasi
+                  Kerjakan paket per komponen untuk drilling, lalu lanjutkan ke simulasi penuh saat ritme dan akurasi
                   mulai stabil.
                 </p>
               </div>
@@ -192,7 +192,7 @@ const dummyUpcoming = [
   {
     id: "upcoming-1",
     nama: "Simulasi Penuh SNBT 01",
-    mapel: "Multi Subtes",
+    mapel: "Multi Komponen",
     kategori: "Full Test",
     jumlah_soal: 30,
     durasi: 120
@@ -201,7 +201,7 @@ const dummyUpcoming = [
     id: "upcoming-2",
     nama: "Drill Literasi Bahasa Indonesia",
     mapel: "Literasi Indonesia",
-    kategori: "Subtes",
+    kategori: "Komponen",
     jumlah_soal: 25,
     durasi: 90
   },
@@ -221,7 +221,7 @@ const filters = computed(() => {
   const uniqueMapel = [
     ...new Set(
       tryouts.value
-        .map((item) => item.mapel || item.kategori || item.subtest || item.nama)
+        .map((item) => item.mapel || item.kategori || item.komponen || item.subtest || item.nama)
         .filter(Boolean)
     )
   ]
@@ -252,14 +252,14 @@ async function fetchTryouts() {
 const filteredTryouts = computed(() => {
   if (activeFilter.value === "Semua") return tryouts.value
   return tryouts.value.filter((t) => {
-    const label = t.mapel || t.kategori || t.subtest || t.nama
+    const label = t.mapel || t.kategori || t.komponen || t.subtest || t.nama
     return label === activeFilter.value
   })
 })
 
 const getItemBadge = (item) => {
   const level = item.jenjang || item.kategori || "Simulasi"
-  const mapel = item.mapel || item.subtest || "SNBT"
+  const mapel = item.mapel || item.komponen || item.subtest || "SNBT"
   return `${level} • ${mapel}`
 }
 

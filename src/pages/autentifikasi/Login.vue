@@ -247,7 +247,7 @@ const highlights = [
   {
     eyebrow: "Tryout",
     title: "Simulasi bertahap",
-    description: "Mulai dari drill subtes sampai simulasi penuh tanpa pindah platform."
+    description: "Mulai dari drill komponen sampai simulasi penuh tanpa pindah platform."
   },
   {
     eyebrow: "Analisis",
@@ -265,13 +265,13 @@ const sellingPoints = [
   "Akses tryout aktif dan batch berikutnya",
   "Ringkasan hasil lengkap dengan pembahasan",
   "Monitoring progres dari satu dashboard",
-  "Persiapan subtes SNBT dalam alur yang rapi"
+  "Persiapan komponen SNBT dalam alur yang rapi"
 ]
 
 const accessItems = [
   "Paket tryout SNBT dan simulasi penuh",
   "Hasil pengerjaan, pembahasan, dan ringkasan jawaban",
-  "Target belajar, roadmap, dan fokus subtes"
+  "Target belajar, roadmap, dan fokus komponen"
 ]
 
 const loginWithGoogle = () => {

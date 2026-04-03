@@ -16,7 +16,7 @@
                   Platform latihan SNBT untuk bantu kamu tembus PTN target
                 </h1>
                 <p class="mt-4 max-w-2xl text-slate-300 text-base md:text-lg leading-relaxed">
-                  Fokus pada tryout terukur, evaluasi subtes, dan strategi belajar yang realistis supaya progresmu
+                  Fokus pada tryout terukur, evaluasi komponen, dan strategi belajar yang realistis supaya progresmu
                   terasa dari minggu ke minggu.
                 </p>
 
@@ -62,13 +62,13 @@
               <p class="text-sm text-slate-500">Langkah 1</p>
               <h2 class="mt-2 text-xl font-semibold text-slate-800">Petakan kemampuan awal</h2>
               <p class="mt-3 text-slate-600 leading-relaxed">
-                Kerjakan tryout diagnostik untuk melihat subtes mana yang paling banyak menahan skor kamu.
+                Kerjakan tryout diagnostik untuk melihat komponen mana yang paling banyak menahan skor kamu.
               </p>
             </article>
 
             <article class="bg-white border rounded-2xl p-6">
               <p class="text-sm text-slate-500">Langkah 2</p>
-              <h2 class="mt-2 text-xl font-semibold text-slate-800">Perbaiki per subtes</h2>
+              <h2 class="mt-2 text-xl font-semibold text-slate-800">Perbaiki per komponen</h2>
               <p class="mt-3 text-slate-600 leading-relaxed">
                 Belajar dengan target kecil yang jelas: akurasi soal, kecepatan membaca, dan manajemen waktu.
               </p>
@@ -88,7 +88,7 @@
               <div class="flex items-center justify-between gap-4">
                 <div>
                   <h2 class="text-2xl font-semibold text-slate-800">Fokus latihan minggu ini</h2>
-                  <p class="mt-2 text-slate-500">Susun prioritas dari subtes yang paling sering menurunkan skor.</p>
+                  <p class="mt-2 text-slate-500">Susun prioritas dari komponen yang paling sering menurunkan skor.</p>
                 </div>
                 <span class="px-3 py-1 rounded-full bg-[#5F9598]/15 text-[#1D546D] text-sm font-medium">Prioritas</span>
               </div>
@@ -129,7 +129,7 @@
                 </div>
                 <div class="rounded-2xl bg-slate-50 border p-4">
                   <p class="text-sm font-medium text-[#1D546D]">Minggu 2</p>
-                  <p class="mt-2 text-sm text-slate-600">Latihan subtes lemah dengan sesi singkat tapi konsisten.</p>
+                  <p class="mt-2 text-sm text-slate-600">Latihan komponen lemah dengan sesi singkat tapi konsisten.</p>
                 </div>
                 <div class="rounded-2xl bg-slate-50 border p-4">
                   <p class="text-sm font-medium text-[#1D546D]">Minggu 3</p>
