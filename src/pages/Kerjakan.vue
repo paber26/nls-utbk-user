@@ -31,7 +31,7 @@
           </div>
         </div>
         <div v-else class="text-center text-slate-400 text-sm py-10">
-          Memuat subtes...
+          Memuat komponen...
         </div>
       </div>
     </aside>
@@ -47,7 +47,7 @@
       <div class="flex justify-between items-center mb-6">
         <div>
           <div class="mb-3 font-semibold text-[#1D546D] px-2 py-0.5 bg-[#1D546D]/10 rounded inline-block text-sm">
-            Subtes: {{ activeKomponenNama || '-' }}
+            Komponen: {{ activeKomponenNama || '-' }}
           </div>
           <br/>
           <div class="mb-1 text-sm text-slate-500 inline-block">
@@ -74,7 +74,7 @@
             class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
             @click="showFinishPopup = true"
           >
-            Akhiri Subtes
+            Akhiri Komponen
           </button>
         </div>
       </div>
@@ -257,13 +257,13 @@
     <!-- Finish Confirmation Popup -->
     <div v-if="showFinishPopup" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div class="bg-white rounded-xl p-6 w-full max-w-md text-center shadow-xl">
-        <h3 class="text-lg font-semibold text-red-600 mb-3">Akhiri Subtes?</h3>
+        <h3 class="text-lg font-semibold text-red-600 mb-3">Akhiri Komponen?</h3>
         <p class="text-slate-600 mb-6">
-          Waktu pengerjaan untuk subtes <b>{{ activeKomponenNama }}</b> masih tersedia.
+          Waktu pengerjaan untuk komponen <b>{{ activeKomponenNama }}</b> masih tersedia.
           <br />
           Anda yakin ingin mengakhiri lebih awal?
           <br /><br />
-          <span class="text-sm text-red-500">Subtes yang telah diakhiri tidak dapat diulangi kembali!</span>
+          <span class="text-sm text-red-500">Komponen yang telah diakhiri tidak dapat diulangi kembali!</span>
         </p>
         <div class="flex justify-center gap-4">
           <button class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 transition" @click="showFinishPopup = false">
@@ -282,7 +282,7 @@
     <!-- Transition Loading Popup -->
     <div v-if="showTransitionLoading" class="fixed inset-0 bg-[#061E29] flex flex-col items-center justify-center z-[100] text-center px-4">
       <div class="w-16 h-16 border-4 border-slate-600 border-t-[#5F9598] rounded-full animate-spin mb-6 mx-auto"></div>
-      <h3 class="text-2xl font-bold text-white mb-2">Menyiapkan Subtes Selanjutnya</h3>
+      <h3 class="text-2xl font-bold text-white mb-2">Menyiapkan Komponen Selanjutnya</h3>
       <p class="text-slate-400">Mohon tunggu sebentar... ({{ transitionCountdown }} detik)</p>
     </div>
 
@@ -825,7 +825,7 @@ function handleAlertClose() {
 
 function handleTimeUp() {
   alertType.value = "error"
-  alertMessage.value = "Waktu pengerjaan untuk subtes ini telah habis. Klik OK untuk menyimpan jawaban dan melanjutkan ke subtes berikutnya."
+  alertMessage.value = "Waktu pengerjaan untuk komponen ini telah habis. Klik OK untuk menyimpan jawaban dan melanjutkan ke komponen berikutnya."
   showAlertPopup.value = true
   endTryoutAfterAlert.value = true
 }
@@ -857,7 +857,7 @@ async function moveToNextKomponen() {
       alertMessage.value = "Tryout berhasil diselesaikan!"
       showAlertPopup.value = true
     } else {
-      // Pindah ke subtes selanjutnya
+      // Pindah ke komponen selanjutnya
       await startCountdown()
 
       if (soalListDalamKomponen.value.length > 0) {
@@ -866,7 +866,7 @@ async function moveToNextKomponen() {
     }
   } catch (e) {
     alertType.value = "error"
-    alertMessage.value = "Gagal memproses alur subtes"
+    alertMessage.value = "Gagal memproses alur komponen"
     showAlertPopup.value = true
     console.error(e)
   } finally {
