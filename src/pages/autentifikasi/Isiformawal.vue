@@ -166,9 +166,11 @@
 
         <button
           type="submit"
-          class="w-full mt-4 bg-[#1D546D] text-white py-3 rounded-xl font-semibold hover:brightness-110 transition"
+          :disabled="isSubmitting"
+          class="w-full mt-4 bg-[#1D546D] text-white py-3 rounded-xl font-semibold hover:brightness-110 transition disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         >
-          Simpan & Lanjut ke Dashboard
+          <span v-if="isSubmitting" class="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full"></span>
+          {{ isSubmitting ? 'Menyimpan...' : 'Simpan & Lanjut ke Dashboard' }}
         </button>
       </form>
       <div class="mt-6 text-center">
@@ -178,7 +180,50 @@
       </div>
     </div>
   </section>
+
+  <!-- ================= POPUP NOTIFICATION ================= -->
+  <Transition name="fade">
+    <div v-if="showPopup" class="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black/50 backdrop-blur-sm">
+      <div 
+        class="bg-white rounded-2xl p-8 max-w-sm w-full shadow-2xl transform transition-all scale-100"
+        :class="popupType === 'success' ? 'border-t-4 border-emerald-500' : 'border-t-4 border-rose-500'"
+      >
+        <div class="flex flex-col items-center text-center">
+          <div v-if="popupType === 'success'" class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <div v-else class="w-16 h-16 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </div>
+          
+          <h3 class="text-xl font-bold text-slate-800 mb-2">{{ popupTitle }}</h3>
+          <p class="text-slate-600 mb-6">{{ popupMessage }}</p>
+          
+          <button 
+            @click="closePopup"
+            class="w-full py-3 px-6 rounded-xl font-semibold transition-all"
+            :class="popupType === 'success' ? 'bg-emerald-500 hover:bg-emerald-600 text-white shadow-lg shadow-emerald-200' : 'bg-rose-500 hover:bg-rose-600 text-white shadow-lg shadow-rose-200'"
+          >
+            {{ popupType === 'success' ? 'Lanjut ke Dashboard' : 'Tutup' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </Transition>
 </template>
+
+<style scoped>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
+</style>
 
 <script setup>
 import { reactive, ref, onMounted, computed, watch } from "vue"
@@ -207,6 +252,28 @@ const sekolahQuery = ref("")
 const showSekolah = ref(false)
 
 const redirecting = ref(false)
+const isSubmitting = ref(false)
+
+// Popup state
+const showPopup = ref(false)
+const popupType = ref("success") // success | error
+const popupTitle = ref("")
+const popupMessage = ref("")
+
+const openPopup = (type, title, message) => {
+  popupType.value = type
+  popupTitle.value = title
+  popupMessage.value = message
+  showPopup.value = true
+}
+
+const closePopup = () => {
+  showPopup.value = false
+  if (popupType.value === "success") {
+    window.location.href = "/"
+  }
+}
+
 onMounted(async () => {
   try {
     const response = await api.get("/me")
@@ -222,36 +289,74 @@ onMounted(async () => {
     form.sekolah_id = response.data.sekolah_id || ""
     form.kelas = response.data.kelas || ""
     form.whatsapp = response.data.whatsapp || ""
-    form.minat = response.data.minat ? JSON.parse(response.data.minat) : []
+    form.minat = response.data.minat || []
 
-    // Prefill wilayah
-    selectedProvinsi.value = response.data.provinsi_id || ""
-    selectedKabupaten.value = response.data.kota_id || ""
-    selectedKecamatan.value = response.data.kecamatan_id || ""
+    // Prefill wilayah by searching names in the lists
+    if (response.data.provinsi) {
+      const prov = provinsiList.value.find(p => p.name === response.data.provinsi)
+      if (prov) {
+        selectedProvinsi.value = prov.id
+        await loadKabupaten(prov.id)
+        
+        if (response.data.kota) {
+          const kab = kabupatenList.value.find(k => k.name === response.data.kota)
+          if (kab) {
+            selectedKabupaten.value = kab.id
+            await loadKecamatan(kab.id)
+            
+            if (response.data.kecamatan) {
+              const kec = kecamatanList.value.find(k => k.name === response.data.kecamatan)
+              if (kec) {
+                selectedKecamatan.value = kec.id
+              }
+            }
+          }
+        }
+      }
+    }
 
     // Prefill nama sekolah jika tersedia
-    if (response.data.sekolah_nama) {
-      sekolahQuery.value = response.data.sekolah_nama
+    if (response.data.sekolah) {
+      sekolahQuery.value = response.data.sekolah
     }
+    
     if (response.data.profil_lengkap && !redirecting.value) {
       redirecting.value = true
       window.location.href = "/dashboard"
       return
     }
-    const sekolahRes = await api.get("/sekolah")
-    console.log("Sekolah data:", sekolahRes.data)
 
-    if (sekolahRes && sekolahRes.data) {
-      // jika response berbentuk { success: true, data: [...] }
-      const list = sekolahRes.data.data || sekolahRes.data
-      sekolahList.splice(0, sekolahList.length, ...list)
-    }
+    // Load initial schools
+    fetchSchools()
   } catch (err) {
     console.error("Failed to fetch user data:", err)
   }
 
   // Load provinsi list on mount
   await loadProvinsi()
+})
+
+const fetchSchools = async (query = "") => {
+  try {
+    const res = await api.get(`/sekolah?search=${query}`)
+    if (res && res.data) {
+      const list = res.data.data || res.data
+      sekolahList.splice(0, sekolahList.length, ...list)
+    }
+  } catch (err) {
+    console.error("Failed to fetch schools:", err)
+  }
+}
+
+// Debounce sekolah search
+let searchTimeout = null
+watch(sekolahQuery, (newVal) => {
+  if (searchTimeout) clearTimeout(searchTimeout)
+  if (newVal.trim().length >= 2) {
+    searchTimeout = setTimeout(() => {
+      fetchSchools(newVal)
+    }, 500)
+  }
 })
 
 const provinsiList = ref([])
@@ -334,22 +439,7 @@ const onKabupatenChange = () => {
 }
 
 const filteredSekolah = computed(() => {
-  // Jika belum mengetik apa-apa, tampilkan 20 sekolah pertama
-  if (!sekolahQuery.value || sekolahQuery.value.trim().length < 2) {
-    return []
-  }
-
-  const keywords = sekolahQuery.value
-    .toLowerCase()
-    .split(" ")
-    .filter((k) => k.length > 0)
-
-  return sekolahList
-    .filter((s) => {
-      const nama = s.nama.toLowerCase()
-      return keywords.every((k) => nama.includes(k))
-    })
-    .slice(0, 100)
+  return sekolahList.slice(0, 50)
 })
 
 const selectSekolah = (sekolah) => {
@@ -370,6 +460,13 @@ const handleLogout = () => {
 }
 
 const submitForm = async () => {
+  if (isSubmitting.value) return
+  
+  if (!form.sekolah_id) {
+    openPopup("error", "Data Belum Lengkap", "Silakan pilih asal sekolah dari daftar yang tersedia.")
+    return
+  }
+
   const prov = provinsiList.value.find((p) => p.id === selectedProvinsi.value)
   const kab = kabupatenList.value.find((k) => k.id === selectedKabupaten.value)
   const kec = kecamatanList.value.find((k) => k.id === selectedKecamatan.value)
@@ -378,6 +475,7 @@ const submitForm = async () => {
   form.kota = kab?.name || ""
   form.kecamatan = kec?.name || ""
 
+  isSubmitting.value = true
   try {
     const res = await api.post("/user/profile", form)
 
@@ -385,13 +483,15 @@ const submitForm = async () => {
     const me = await api.get("/me")
 
     if (me.data.profil_lengkap) {
-      window.location.href = "/"
+      openPopup("success", "Berhasil!", "Profil Anda telah diperbarui. Selamat belajar!")
     } else {
-      alert("Profil belum lengkap, silakan lengkapi semua data.")
+      openPopup("error", "Gagal", "Profil belum lengkap, silakan lengkapi semua data.")
     }
   } catch (err) {
-    alert("Gagal menyimpan data, silakan coba lagi")
+    openPopup("error", "Oops!", "Gagal menyimpan data, silakan coba lagi atau hubungi admin.")
     console.error(err)
+  } finally {
+    isSubmitting.value = false
   }
 }
 </script>

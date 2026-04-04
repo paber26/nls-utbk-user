@@ -416,7 +416,7 @@ function handleVisibilityChange() {
     localStorage.setItem(WARNING_KEY, warningCount.value)
     showWarningPopup.value = true
 
-    if (warningCount.value >= 100) {
+    if (warningCount.value >= 10) {
       finishTryout()
     }
   }
@@ -431,7 +431,7 @@ function handleWindowBlur() {
   localStorage.setItem(WARNING_KEY, warningCount.value)
   showWarningPopup.value = true
 
-  if (warningCount.value >= 100) {
+  if (warningCount.value >= 10) {
     finishTryout()
   }
 }
