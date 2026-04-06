@@ -21,7 +21,6 @@
 
   <Login v-else-if="!loggedIn && !proseslogin" />
   <Isiformawal v-else-if="loggedIn && !profilLengkap" />
-  <EventInfo v-else-if="loggedIn && profilLengkap && !isEventRegistered" />
   <RouterView v-else />
 </template>
 
@@ -31,7 +30,6 @@ import { RouterView, useRouter, useRoute } from "vue-router"
 import { useUserStore } from "@/stores/userStore"
 import Login from "./pages/autentifikasi/Login.vue"
 import Isiformawal from "./pages/autentifikasi/Isiformawal.vue"
-import EventInfo from "./pages/event/EventInfo.vue"
 
 const userStore = useUserStore()
 const router = useRouter()
@@ -41,7 +39,6 @@ const checkingAuth = computed(() => userStore.checkingAuth)
 const loggedIn = computed(() => userStore.loggedIn)
 const profilLengkap = computed(() => userStore.profilLengkap)
 const proseslogin = computed(() => userStore.proseslogin)
-const isEventRegistered = computed(() => userStore.user?.is_event_registered === 1)
 
 onMounted(async () => {
   console.log("App.vue mounted, initializing auth...")
