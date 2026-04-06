@@ -1,13 +1,13 @@
 <template>
-  <div class="bg-bgsoft font-poppins">
-    <div class="flex min-h-screen">
-      <Sidebar />
+  <AppShell>
+    <template #header>
+      <div>
+        <h1 class="text-lg font-semibold text-slate-800">Edit Profil</h1>
+        <p class="text-sm text-slate-500">Perbarui identitas peserta dan informasi sekolah Anda</p>
+      </div>
+    </template>
 
-      <!-- ================= MAIN CONTENT ================= -->
-      <main class="flex-1">
-        <TopbarDashboard />
-
-        <div class="px-6 py-8">
+    <div class="px-6 py-8">
           <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-sm border p-8">
             <div v-if="initialLoading" class="flex items-center justify-center py-10">
               <div class="text-center">
@@ -170,18 +170,15 @@
               </div>
             </div>
           </div>
-        </div>
-      </main>
     </div>
-  </div>
+  </AppShell>
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue"
 import api from "@/services/api"
 
-import Sidebar from "../components/layout/Sidebar.vue"
-import TopbarDashboard from "../components/layout/TopbarDashboard.vue"
+import AppShell from "../components/layout/AppShell.vue"
 import { computed } from "vue"
 import { useRouter } from "vue-router"
 

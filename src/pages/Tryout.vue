@@ -1,14 +1,10 @@
 <template>
-  <div class="bg-bgsoft font-poppins">
-    <div class="flex min-h-screen">
-      <Sidebar></Sidebar>
+  <AppShell>
+    <template #header>
+      <TopbarTryout />
+    </template>
 
-      <!-- ================= MAIN CONTENT ================= -->
-      <main class="flex-1">
-        <TopbarTryout></TopbarTryout>
-
-        <!-- Content -->
-        <div class="px-6 py-8">
+    <div class="px-6 py-8">
           <section
             class="mb-8 rounded-3xl bg-gradient-to-br from-[#061E29] via-[#1D546D] to-[#5F9598] text-white px-6 py-7 md:px-8"
           >
@@ -170,10 +166,8 @@
               </div>
             </div>
           </section>
-        </div>
-      </main>
     </div>
-  </div>
+  </AppShell>
 </template>
 
 <script setup>
@@ -181,7 +175,7 @@ import { computed, ref, onMounted } from "vue"
 import { RouterLink, useRouter } from "vue-router"
 import api from "@/services/api"
 
-import Sidebar from "../components/layout/Sidebar.vue"
+import AppShell from "../components/layout/AppShell.vue"
 import TopbarTryout from "../components/layout/TopbarTryout.vue"
 
 const router = useRouter()

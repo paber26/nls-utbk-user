@@ -1,24 +1,18 @@
 <template>
-  <body class="bg-bgsoft font-poppins">
-    <div class="flex min-h-screen">
-      <Sidebar></Sidebar>
-
-      <!-- ================= MAIN ================= -->
-      <main class="flex-1">
-        <!-- Topbar -->
-        <header class="bg-white border-b px-6 py-4">
+  <AppShell>
+    <template #header>
+      <div>
           <h1 class="text-lg font-semibold text-slate-800">Persiapan Tryout</h1>
           <p class="text-sm text-slate-500">Harap baca ketentuan sebelum memulai tryout</p>
-        </header>
+      </div>
+    </template>
 
-        <!-- Content -->
-        <!-- Loading State -->
-        <div v-if="isLoading" class="px-6 py-12 w-full flex flex-col items-center justify-center min-h-[50vh]">
+    <div v-if="isLoading" class="flex min-h-[50vh] w-full flex-col items-center justify-center px-6 py-12">
           <div class="w-12 h-12 border-4 border-slate-200 border-t-[#1D546D] rounded-full animate-spin mb-4"></div>
           <p class="text-slate-500 font-medium animate-pulse">Menyiapkan data tryout...</p>
-        </div>
+    </div>
 
-        <div v-else class="px-6 py-8 w-full">
+    <div v-else class="w-full px-6 py-8">
           <div class="space-y-6">
             <!-- LEFT (2/3) -->
             <div class="lg:col-span-2 space-y-6">
@@ -149,10 +143,8 @@
               </section>
             </div>
           </div>
-        </div>
-      </main>
     </div>
-  </body>
+  </AppShell>
 </template>
 
 <script setup>
@@ -160,7 +152,7 @@ import { ref, onMounted, computed, onUnmounted } from "vue"
 import { useRoute, useRouter, RouterLink } from "vue-router"
 import api from "@/services/api"
 
-import Sidebar from "../components/layout/Sidebar.vue"
+import AppShell from "../components/layout/AppShell.vue"
 
 const route = useRoute()
 const router = useRouter()

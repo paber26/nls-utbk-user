@@ -1,12 +1,10 @@
 <template>
-  <div class="bg-bgsoft font-poppins min-h-screen">
-    <div class="flex min-h-screen">
-      <Sidebar />
+  <AppShell>
+    <template #header>
+      <TopbarDashboard />
+    </template>
 
-      <main class="flex-1">
-        <TopbarDashboard />
-
-        <div class="px-6 py-10 max-w-6xl mx-auto space-y-8">
+    <div class="mx-auto max-w-6xl space-y-8 px-6 py-10">
           <section class="rounded-3xl overflow-hidden bg-[#061E29] text-white relative">
             <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(95,149,152,0.28),_transparent_30%),radial-gradient(circle_at_bottom_right,_rgba(29,84,109,0.24),_transparent_34%)]"></div>
             <div class="relative px-8 py-10 md:px-10 md:py-12 grid lg:grid-cols-[1.5fr_1fr] gap-8 items-center">
@@ -142,15 +140,13 @@
               </div>
             </div>
           </section>
-        </div>
-      </main>
     </div>
-  </div>
+  </AppShell>
 </template>
 
 <script setup>
 import { RouterLink } from "vue-router"
 
-import Sidebar from "../components/layout/Sidebar.vue"
+import AppShell from "../components/layout/AppShell.vue"
 import TopbarDashboard from "../components/layout/TopbarDashboard.vue"
 </script>

@@ -1,9 +1,13 @@
 <template>
-  <div class="bg-slate-100 font-poppins min-h-screen">
-    <div class="flex min-h-screen">
-      <Sidebar />
+  <AppShell shell-class="bg-slate-100">
+    <template #header>
+      <div>
+        <h1 class="text-lg font-semibold text-slate-800">Fokus SNBT</h1>
+        <p class="text-sm text-slate-500">Lihat area belajar prioritas dan susun ritme latihan yang lebih terarah</p>
+      </div>
+    </template>
 
-      <div class="flex-1 flex items-center justify-center p-8 relative overflow-hidden">
+    <div class="relative flex min-h-[calc(100vh-81px)] items-center justify-center overflow-hidden p-8">
         <div class="absolute -top-32 -left-32 w-96 h-96 bg-[#5F9598]/22 rounded-full blur-3xl"></div>
         <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-[#1D546D]/20 rounded-full blur-3xl"></div>
 
@@ -49,11 +53,10 @@
             </div>
           </div>
         </div>
-      </div>
     </div>
-  </div>
+  </AppShell>
 </template>
 
 <script setup>
-import Sidebar from "../components/layout/Sidebar.vue"
+import AppShell from "../components/layout/AppShell.vue"
 </script>

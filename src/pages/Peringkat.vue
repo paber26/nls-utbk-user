@@ -1,13 +1,10 @@
 <template>
-  <div class="bg-bgsoft font-poppins">
-    <div class="flex min-h-screen">
-      <Sidebar></Sidebar>
-      <!-- ================= MAIN ================= -->
-      <main class="flex-1">
-        <TopbarPeringkat></TopbarPeringkat>
+  <AppShell>
+    <template #header>
+      <TopbarPeringkat />
+    </template>
 
-        <!-- Content -->
-        <div class="px-6 py-8 flex items-center justify-center min-h-[70vh] relative overflow-hidden">
+    <div class="relative flex min-h-[70vh] items-center justify-center overflow-hidden px-6 py-8">
           <!-- Animated Background Blobs -->
           <div class="absolute -top-32 -left-32 w-96 h-96 bg-[#5F9598]/22 rounded-full blur-3xl animate-pulse"></div>
           <div
@@ -28,13 +25,11 @@
               🚀 Coming Soon 2026
             </div>
           </div>
-        </div>
-      </main>
     </div>
-  </div>
+  </AppShell>
 </template>
 
 <script setup>
-import Sidebar from "../components/layout/Sidebar.vue"
+import AppShell from "../components/layout/AppShell.vue"
 import TopbarPeringkat from "../components/layout/TopbarPeringkat.vue"
 </script>

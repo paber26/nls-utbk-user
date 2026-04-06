@@ -1,41 +1,13 @@
 <template>
-  <!-- root wrapper (use div instead of body so KaTeX can target it reliably) -->
-  <div ref="root" class="bg-bgsoft font-poppins overflow-hidden">
-    <div class="flex min-h-screen w-full relative">
-      <!-- Mobile Sidebar Overlay -->
-      <div 
-        v-if="showSidebar" 
-        class="fixed inset-0 bg-black/50 z-40 lg:hidden"
-        @click="showSidebar = false"
-      ></div>
+  <AppShell>
+    <template #header>
+      <div>
+        <h1 class="text-lg font-semibold text-slate-800">Hasil Tryout</h1>
+        <p class="text-sm text-slate-500">Ringkasan hasil pengerjaan tryout</p>
+      </div>
+    </template>
 
-      <Sidebar 
-        class="fixed inset-y-0 left-0 z-50 transform transition-transform lg:static lg:translate-x-0"
-        :class="showSidebar ? 'translate-x-0' : '-translate-x-full'"
-      ></Sidebar>
-
-      <!-- ================= MAIN ================= -->
-      <main class="flex-1 min-w-0 overflow-x-hidden">
-        <!-- Topbar -->
-        <header class="bg-white border-b px-4 md:px-6 py-4 flex items-center gap-4">
-          <!-- Hamburger Menu for Mobile -->
-          <button 
-            @click="showSidebar = true"
-            class="lg:hidden p-2 -ml-2 text-slate-500 hover:text-slate-800 transition"
-          >
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-            </svg>
-          </button>
-
-          <div>
-            <h1 class="text-lg font-semibold text-slate-800">Hasil Tryout</h1>
-            <p class="text-sm text-slate-500">Ringkasan hasil pengerjaan tryout</p>
-          </div>
-        </header>
-
-        <!-- Content -->
-        <div class="px-4 md:px-6 py-6 w-full">
+    <div ref="root" class="w-full overflow-hidden px-4 py-6 md:px-6">
           <!-- Loading State -->
           <div v-if="loading" class="flex flex-col items-center justify-center py-20">
             <div class="w-12 h-12 border-4 border-[#5F9598]/25 border-t-[#1D546D] rounded-full animate-spin"></div>
@@ -329,9 +301,7 @@
           </div>
         </div>
       </div>
-      </main>
-    </div>
-  </div>
+  </AppShell>
 </template>
 
 <script setup>
@@ -339,7 +309,7 @@ import { ref, computed, onMounted, onUnmounted, watch, nextTick } from "vue"
 import { RouterLink } from "vue-router"
 import { useRoute } from "vue-router"
 
-import Sidebar from "../components/layout/Sidebar.vue"
+import AppShell from "../components/layout/AppShell.vue"
 import api from "../services/api"
 // math rendering
 import katex from "katex"
@@ -349,7 +319,6 @@ import "katex/dist/katex.min.css"
 const route = useRoute()
 const id = route.params.id
 
-const showSidebar = ref(false)
 const hasil = ref(null)
 const ringkasan = ref({
   nilai_irt: 0,

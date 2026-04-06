@@ -1,9 +1,13 @@
 <template>
-  <div class="bg-slate-100 font-poppins min-h-screen">
-    <div class="flex min-h-screen">
-      <Sidebar />
+  <AppShell shell-class="bg-slate-100">
+    <template #header>
+      <div>
+        <h1 class="text-lg font-semibold text-slate-800">Target PTN</h1>
+        <p class="text-sm text-slate-500">Susun strategi kampus tujuan dan pantau rentang skor yang perlu dicapai</p>
+      </div>
+    </template>
 
-      <div class="flex-1 flex items-center justify-center p-8 relative overflow-hidden">
+    <div class="relative flex min-h-[calc(100vh-81px)] items-center justify-center overflow-hidden p-8">
         <!-- Animated Gradient Blobs -->
         <div class="blob blob1"></div>
         <div class="blob blob2"></div>
@@ -50,13 +54,12 @@
             </div>
           </div>
         </div>
-      </div>
     </div>
-  </div>
+  </AppShell>
 </template>
 
 <script setup>
-import Sidebar from "../components/layout/Sidebar.vue"
+import AppShell from "../components/layout/AppShell.vue"
 </script>
 
 <style scoped>
