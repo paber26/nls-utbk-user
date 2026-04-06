@@ -6,11 +6,11 @@
       @click="closeSidebar"
     ></div>
 
-    <Sidebar :open="sidebarOpen" @close="closeSidebar" />
+    <Sidebar :open="sidebarOpen" @close="closeSidebar" @open="openSidebar" />
 
     <div
       class="min-h-screen transition-[padding] duration-300 ease-out"
-      :class="sidebarOpen ? 'lg:pl-64' : 'lg:pl-0'"
+      :class="sidebarOpen ? 'lg:pl-64' : 'lg:pl-[4.5rem]'"
     >
       <header
         v-if="$slots.header"
@@ -47,7 +47,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from "vue"
+import { onMounted, onBeforeUnmount, ref, watch } from "vue"
 import { useRoute } from "vue-router"
 
 import Sidebar from "./Sidebar.vue"
@@ -60,16 +60,65 @@ const props = defineProps({
 })
 
 const route = useRoute()
+const SIDEBAR_STORAGE_KEY = "nls_utbk_user_sidebar_open"
 
-const sidebarOpen = ref(typeof window !== "undefined" ? window.innerWidth >= 1024 : true)
+const getDesktopSidebarState = () => {
+  if (typeof window === "undefined") return true
+
+  if (window.innerWidth < 1024) {
+    return false
+  }
+
+  const savedState = window.localStorage.getItem(SIDEBAR_STORAGE_KEY)
+  return savedState === null ? true : savedState === "true"
+}
+
+const sidebarOpen = ref(getDesktopSidebarState())
+
+const persistDesktopSidebarState = (isOpen) => {
+  if (typeof window !== "undefined" && window.innerWidth >= 1024) {
+    window.localStorage.setItem(SIDEBAR_STORAGE_KEY, String(isOpen))
+  }
+}
 
 const toggleSidebar = () => {
   sidebarOpen.value = !sidebarOpen.value
+  persistDesktopSidebarState(sidebarOpen.value)
 }
 
 const closeSidebar = () => {
   sidebarOpen.value = false
+  persistDesktopSidebarState(false)
 }
+
+const openSidebar = () => {
+  sidebarOpen.value = true
+  persistDesktopSidebarState(true)
+}
+
+const syncSidebarWithViewport = () => {
+  if (typeof window === "undefined") return
+
+  if (window.innerWidth < 1024) {
+    sidebarOpen.value = false
+    return
+  }
+
+  sidebarOpen.value = getDesktopSidebarState()
+}
+
+onMounted(() => {
+  syncSidebarWithViewport()
+  if (typeof window !== "undefined") {
+    window.addEventListener("resize", syncSidebarWithViewport)
+  }
+})
+
+onBeforeUnmount(() => {
+  if (typeof window !== "undefined") {
+    window.removeEventListener("resize", syncSidebarWithViewport)
+  }
+})
 
 watch(
   () => route.fullPath,
