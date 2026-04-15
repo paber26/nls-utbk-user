@@ -100,7 +100,7 @@
                     <label class="block text-sm font-medium text-slate-600 mb-1">Provinsi</label>
                     <select
                       v-model="form.provinsi_id"
-                      @change="loadKabupaten"
+                      @change="() => loadKabupaten(true)"
                       class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#5F9598]/35 outline-none"
                     >
                       <option value="">Pilih Provinsi</option>
@@ -114,7 +114,7 @@
                     <label class="block text-sm font-medium text-slate-600 mb-1">Kota / Kabupaten</label>
                     <select
                       v-model="form.kota_id"
-                      @change="loadKecamatan"
+                      @change="() => loadKecamatan(true)"
                       class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#5F9598]/35 outline-none"
                     >
                       <option value="">Pilih Kota/Kabupaten</option>
@@ -237,6 +237,30 @@ async function fetchProfil() {
       ...form.value,
       ...res.data
     }
+    // Map strings back to IDs for dropdown prefill
+    if (res.data.provinsi) {
+      const p = provinsiList.value.find((x) => x.name === res.data.provinsi)
+      if (p) {
+        form.value.provinsi_id = p.id
+        await loadKabupaten(false)
+
+        if (res.data.kota) {
+          const k = kabupatenList.value.find((x) => x.name === res.data.kota)
+          if (k) {
+            form.value.kota_id = k.id
+            await loadKecamatan(false)
+
+            if (res.data.kecamatan) {
+              const kec = kecamatanList.value.find((x) => x.name === res.data.kecamatan)
+              if (kec) {
+                form.value.kecamatan_id = kec.id
+              }
+            }
+          }
+        }
+      }
+    }
+
     if (res.data.sekolah_nama) {
       sekolahQuery.value = res.data.sekolah_nama
     }
@@ -263,19 +287,26 @@ async function loadProvinsi() {
   provinsiList.value = res.data
 }
 
-async function loadKabupaten() {
+async function loadKabupaten(reset = false) {
   if (!form.value.provinsi_id) return
   const res = await api.get(`/wilayah/kabupaten/${form.value.provinsi_id}`)
   kabupatenList.value = res.data
-  kecamatanList.value = []
-  form.value.kota_id = ""
-  form.value.kecamatan_id = ""
+  
+  if (reset) {
+    kecamatanList.value = []
+    form.value.kota_id = ""
+    form.value.kecamatan_id = ""
+  }
 }
 
-async function loadKecamatan() {
+async function loadKecamatan(reset = false) {
   if (!form.value.kota_id) return
   const res = await api.get(`/wilayah/kecamatan/${form.value.kota_id}`)
   kecamatanList.value = res.data
+
+  if (reset) {
+    form.value.kecamatan_id = ""
+  }
 }
 
 async function updateProfil() {
@@ -297,6 +328,17 @@ async function updateProfil() {
     }
     return
   }
+
+  // Populate strings before sending to API
+  const pData = provinsiList.value.find((x) => x.id === form.value.provinsi_id)
+  if (pData) form.value.provinsi = pData.name
+
+  const kData = kabupatenList.value.find((x) => x.id === form.value.kota_id)
+  if (kData) form.value.kota = kData.name
+
+  const kecData = kecamatanList.value.find((x) => x.id === form.value.kecamatan_id)
+  if (kecData) form.value.kecamatan = kecData.name
+
   try {
     loading.value = true
     await api.put("/user/profile", form.value)
