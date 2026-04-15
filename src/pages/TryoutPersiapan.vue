@@ -195,7 +195,7 @@ const isLoading = ref(true)
 const tryout = ref({
   nama: "",
   jenjang: "",
-  mapel: "",
+  komponen: "",
   jumlah_soal: 0,
   durasi: 0,
   requires_access_key: false

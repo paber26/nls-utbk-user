@@ -409,7 +409,7 @@ const canShowPembahasan = computed(() => {
 })
 
 const badgeLabel = computed(() => {
-  const kategori = hasil.value?.kategori || hasil.value?.mapel || hasil.value?.komponen || hasil.value?.subtest
+  const kategori = hasil.value?.kategori || hasil.value?.komponen || hasil.value?.subtest
   return kategori ? `SNBT • ${kategori}` : "Simulasi SNBT"
 })
 

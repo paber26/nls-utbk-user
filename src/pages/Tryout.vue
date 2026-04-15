@@ -69,6 +69,12 @@
 
               <p class="text-sm text-slate-500 mt-1">{{ item.jumlah_soal }} soal • {{ item.durasi }} menit</p>
 
+              <div v-if="item.cakupan_komponen && item.cakupan_komponen.length" class="mt-3 flex flex-wrap gap-1.5">
+                <span v-for="komponen in item.cakupan_komponen" :key="komponen" class="text-[10px] bg-slate-100 border border-slate-200 text-slate-600 px-1.5 py-0.5 rounded">
+                  {{ komponen }}
+                </span>
+              </div>
+
               <!-- Status -->
               <span
                 v-if="item.status === null"
@@ -149,7 +155,7 @@
                 </div>
 
                 <span class="text-xs bg-[#5F9598]/12 text-[#1D546D] px-2 py-1 rounded">
-                  {{ item.kategori }} • {{ item.mapel }}
+                  {{ item.kategori }} • {{ item.komponen }}
                 </span>
 
                 <h3 class="font-semibold mt-4 text-slate-800 leading-snug">
@@ -186,7 +192,7 @@ const dummyUpcoming = [
   {
     id: "upcoming-1",
     nama: "Simulasi Penuh SNBT 01",
-    mapel: "Multi Komponen",
+    komponen: "Multi Komponen",
     kategori: "Full Test",
     jumlah_soal: 30,
     durasi: 120
@@ -194,7 +200,7 @@ const dummyUpcoming = [
   {
     id: "upcoming-2",
     nama: "Drill Literasi Bahasa Indonesia",
-    mapel: "Literasi Indonesia",
+    komponen: "Literasi Indonesia",
     kategori: "Komponen",
     jumlah_soal: 25,
     durasi: 90
@@ -202,7 +208,7 @@ const dummyUpcoming = [
   {
     id: "upcoming-3",
     nama: "Booster Penalaran Matematika",
-    mapel: "Penalaran Matematika",
+    komponen: "Penalaran Matematika",
     kategori: "Booster",
     jumlah_soal: 35,
     durasi: 120
@@ -212,15 +218,15 @@ const loading = ref(false)
 const activeFilter = ref("Semua")
 
 const filters = computed(() => {
-  const uniqueMapel = [
+  const uniqueKomponen = [
     ...new Set(
       tryouts.value
-        .map((item) => item.mapel || item.kategori || item.komponen || item.subtest || item.nama)
+        .map((item) => item.komponen || item.kategori || item.subtest || item.nama)
         .filter(Boolean)
     )
   ]
 
-  return ["Semua", ...uniqueMapel]
+  return ["Semua", ...uniqueKomponen]
 })
 
 async function fetchTryouts() {
@@ -246,15 +252,15 @@ async function fetchTryouts() {
 const filteredTryouts = computed(() => {
   if (activeFilter.value === "Semua") return tryouts.value
   return tryouts.value.filter((t) => {
-    const label = t.mapel || t.kategori || t.komponen || t.subtest || t.nama
+    const label = t.komponen || t.kategori || t.subtest || t.nama
     return label === activeFilter.value
   })
 })
 
 const getItemBadge = (item) => {
   const level = item.jenjang || item.kategori || "Simulasi"
-  const mapel = item.mapel || item.komponen || item.subtest || "SNBT"
-  return `${level} • ${mapel}`
+  const komponen = item.komponen || item.subtest || "SNBT"
+  return `${level} • ${komponen}`
 }
 
 onMounted(() => {
