@@ -59,9 +59,7 @@
           <!-- Tryout List -->
           <section v-else-if="filteredTryouts.length" class="grid md:grid-cols-3 gap-6">
             <div v-for="item in filteredTryouts" :key="item.id" class="bg-white p-6 rounded-xl border">
-              <span class="text-xs bg-[#5F9598]/12 text-[#1D546D] px-2 py-1 rounded">
-                {{ getItemBadge(item) }}
-              </span>
+
 
               <h3 class="font-medium mt-3 text-slate-800">
                 {{ item.nama }}
@@ -154,10 +152,6 @@
                   Upcoming
                 </div>
 
-                <span class="text-xs bg-[#5F9598]/12 text-[#1D546D] px-2 py-1 rounded">
-                  {{ item.kategori }} • {{ item.komponen }}
-                </span>
-
                 <h3 class="font-semibold mt-4 text-slate-800 leading-snug">
                   {{ item.nama }}
                 </h3>
@@ -218,14 +212,18 @@ const loading = ref(false)
 const activeFilter = ref("Semua")
 
 const filters = computed(() => {
-  const uniqueKomponen = [
-    ...new Set(
-      tryouts.value
-        .map((item) => item.komponen || item.kategori || item.subtest || item.nama)
-        .filter(Boolean)
-    )
-  ]
+  let allKomponens = []
+  
+  tryouts.value.forEach((item) => {
+    if (item.cakupan_komponen && Array.isArray(item.cakupan_komponen) && item.cakupan_komponen.length > 0) {
+      allKomponens.push(...item.cakupan_komponen)
+    } else if (item.komponen && item.komponen !== '-') {
+      const splits = item.komponen.split(',').map(s => s.trim())
+      allKomponens.push(...splits)
+    }
+  })
 
+  const uniqueKomponen = [...new Set(allKomponens)].filter(Boolean)
   return ["Semua", ...uniqueKomponen]
 })
 
@@ -251,17 +249,23 @@ async function fetchTryouts() {
 
 const filteredTryouts = computed(() => {
   if (activeFilter.value === "Semua") return tryouts.value
+  
   return tryouts.value.filter((t) => {
-    const label = t.komponen || t.kategori || t.subtest || t.nama
-    return label === activeFilter.value
+    let relatedComponents = []
+    
+    if (t.cakupan_komponen && Array.isArray(t.cakupan_komponen) && t.cakupan_komponen.length > 0) {
+      relatedComponents = t.cakupan_komponen
+    } else if (t.komponen && t.komponen !== '-') {
+      relatedComponents = t.komponen.split(',').map(s => s.trim())
+    }
+    
+    if (relatedComponents.includes(activeFilter.value)) return true
+    
+    return t.kategori === activeFilter.value || t.nama === activeFilter.value
   })
 })
 
-const getItemBadge = (item) => {
-  const level = item.jenjang || item.kategori || "Simulasi"
-  const komponen = item.komponen || item.subtest || "SNBT"
-  return `${level} • ${komponen}`
-}
+
 
 onMounted(() => {
   fetchTryouts()

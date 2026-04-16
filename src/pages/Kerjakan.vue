@@ -103,57 +103,53 @@
 
           <!-- Pilihan Ganda -->
           <div v-if="tipeSoal === 'pg'" key="ans-pg" class="space-y-5">
-            <div
+            <label
               v-for="(opt, index) in options"
               :key="opt.key"
-              class="border rounded-xl p-4 bg-slate-50 hover:bg-slate-100 transition"
+              class="flex items-start gap-4 border rounded-xl p-4 bg-slate-50 hover:bg-slate-100 transition cursor-pointer w-full"
             >
-              <label class="flex items-start gap-4 cursor-pointer w-full">
-                <input
-                  type="radio"
-                  :name="'soal-' + currentNumber"
-                  v-model="singleAnswer"
-                  :value="opt.key"
-                  class="mt-1 accent-[#1D546D]"
-                  @change="onAnswerChange"
-                />
-                <div class="flex items-start gap-3 w-full">
-                  <div
-                    class="w-8 h-8 flex items-center justify-center rounded-full bg-[#F3F4F4] text-[#1D546D] font-semibold"
-                  >
-                    {{ String.fromCharCode(65 + index) }}
-                  </div>
-                  <div :class="[fontSize, 'prose prose-sm max-w-none leading-relaxed text-slate-700']" v-html="opt.text"></div>
+              <input
+                type="radio"
+                :name="'soal-' + currentNumber"
+                v-model="singleAnswer"
+                :value="opt.key"
+                class="mt-1 accent-[#1D546D]"
+                @change="onAnswerChange"
+              />
+              <div class="flex items-start gap-3 w-full">
+                <div
+                  class="w-8 h-8 flex items-center justify-center rounded-full bg-[#F3F4F4] text-[#1D546D] font-semibold"
+                >
+                  {{ String.fromCharCode(65 + index) }}
                 </div>
-              </label>
-            </div>
+                <div :class="[fontSize, 'prose prose-sm max-w-none leading-relaxed text-slate-700']" v-html="opt.text"></div>
+              </div>
+            </label>
           </div>
 
           <!-- PG Majemuk -->
           <div v-else-if="tipeSoal === 'pg_majemuk'" key="ans-pg-majemuk" class="space-y-5">
-            <div
+            <label
               v-for="(opt, index) in options"
               :key="opt.key"
-              class="border rounded-xl p-4 bg-slate-50 hover:bg-slate-100 transition"
+              class="flex items-start gap-4 border rounded-xl p-4 bg-slate-50 hover:bg-slate-100 transition cursor-pointer w-full"
             >
-              <label class="flex items-start gap-4 cursor-pointer w-full">
-                <input
-                  type="checkbox"
-                  :value="opt.key"
-                  v-model="answersMap[currentNumber]"
-                  @change="onAnswerChange"
-                  class="mt-1 accent-[#1D546D]"
-                />
-                <div class="flex items-start gap-3 w-full">
-                  <div
-                    class="w-8 h-8 flex items-center justify-center rounded-full bg-[#F3F4F4] text-[#1D546D] font-semibold"
-                  >
-                    {{ String.fromCharCode(65 + index) }}
-                  </div>
-                  <div :class="[fontSize, 'prose prose-sm max-w-none leading-relaxed text-slate-700']" v-html="opt.text"></div>
+              <input
+                type="checkbox"
+                :value="opt.key"
+                v-model="answersMap[currentNumber]"
+                @change="onAnswerChange"
+                class="mt-1 accent-[#1D546D]"
+              />
+              <div class="flex items-start gap-3 w-full">
+                <div
+                  class="w-8 h-8 flex items-center justify-center rounded-full bg-[#F3F4F4] text-[#1D546D] font-semibold"
+                >
+                  {{ String.fromCharCode(65 + index) }}
                 </div>
-              </label>
-            </div>
+                <div :class="[fontSize, 'prose prose-sm max-w-none leading-relaxed text-slate-700']" v-html="opt.text"></div>
+              </div>
+            </label>
           </div>
 
           <!-- PG Kompleks (Improved UI) -->
@@ -343,10 +339,10 @@ const opened = ref({})
 const flagged = ref({})
 const answered = ref({})
 const answersMap = ref({})
-
+const singleAnswer = ref("")
+const komponenTimers = ref({})
 const fontSize = ref("text-base")
 const answers = ref([])
-const singleAnswer = ref("")
 const textAnswer = ref("")
 const soalText = ref("")
 const isLoadingQuestion = ref(false)
@@ -635,7 +631,8 @@ function saveProgress() {
     opened: opened.value,
     flagged: flagged.value,
     answered: answered.value,
-    answersMap: answersMap.value
+    answersMap: answersMap.value,
+    komponenTimers: komponenTimers.value
   }
   localStorage.setItem(STORAGE_KEY, JSON.stringify(payload))
 }
@@ -651,8 +648,11 @@ function loadProgress() {
     flagged.value = data.flagged || {}
     answered.value = data.answered || {}
     answersMap.value = data.answersMap || {}
+    if (data.komponenTimers) {
+      komponenTimers.value = data.komponenTimers
+    }
   } catch (e) {
-    console.warn("Failed to load progress", e)
+    console.error("Gagal membaca progres", e)
   }
 }
 
@@ -764,12 +764,28 @@ function formatTime(totalSeconds) {
 async function startCountdown() {
   try {
     const res = await api.get(`/user/tryout/${tryoutId}/remaining-time`)
-    let remaining = Math.floor(res.data.sisa_detik)
+    let globalRemaining = Math.floor(res.data.sisa_detik)
     
-    activeKomponenNama.value = res.data.komponen_nama || '-'
+    const keys = Object.keys(groupedSoalList.value)
+    if (keys.length > 0 && (!activeKomponenNama.value || activeKomponenNama.value === '-')) {
+      activeKomponenNama.value = keys[0]
+    }
     
-    // Jika waktu tryout sudah habis sebelum halaman dibuka
-    if (remaining <= 0 && !res.data.komponen_id) {
+    // Inisialisasi timer komponen berdasarkan mapping durasi dari backend
+    let hasChanges = false
+    const rawList = res.data.komponen_list || []
+    rawList.forEach((k) => {
+      const key = k.nama_komponen
+      if (komponenTimers.value[key] === undefined && k.durasi_menit > 0) {
+        komponenTimers.value[key] = k.durasi_menit * 60
+        hasChanges = true
+      }
+    })
+    
+    if (hasChanges) saveProgress()
+
+    // Jika waktu tryout global sudah habis sebelum halaman dibuka
+    if (globalRemaining <= 0 && !res.data.komponen_id) {
       alertType.value = "error"
       alertMessage.value = "Waktu tryout sudah berakhir atau tryout sudah diselesaikan. Anda akan diarahkan keluar."
       showAlertPopup.value = true
@@ -781,27 +797,34 @@ async function startCountdown() {
       return
     }
 
-    if (remaining <= 0 && res.data.komponen_id) {
-        // jika refres di posisi detik 0 maka panggil alert waktu habis
-        handleTimeUp()
-        return
-    }
-
-    console.log("Remaining time (seconds):", remaining)
-    timer.value = formatTime(remaining)
-
     if (countdownInterval) {
       clearInterval(countdownInterval)
     }
 
     countdownInterval = setInterval(() => {
-      if (remaining > 0) {
-        remaining--
-        timer.value = formatTime(remaining)
+      const activeName = activeKomponenNama.value
+      
+      let compRemaining = komponenTimers.value[activeName]
+      if (compRemaining === undefined) {
+          // Jika komponen tidak punya durasi eksplisit, ikuti durasi global
+          compRemaining = globalRemaining
+      }
+      
+      if (compRemaining > 0) {
+        compRemaining--
+        komponenTimers.value[activeName] = compRemaining
+        
+        timer.value = formatTime(compRemaining)
+        
+        if (compRemaining % 10 === 0) saveProgress() // simpan state tiap 10 detik
       } else {
+        komponenTimers.value[activeName] = 0
+        timer.value = "00:00"
         clearInterval(countdownInterval)
         handleTimeUp()
       }
+      
+      globalRemaining--;
     }, 1000)
   } catch (e) {
     console.error("Failed to start countdown", e)
@@ -868,23 +891,28 @@ async function moveToNextKomponen() {
           }
         }, 1000)
       })
-    }
 
-    const res = await api.post(`/user/tryout/${tryoutId}/next-komponen`)
-    
-    if (res.data.is_finished) {
+      // Pindah ke komponen selanjutnya secara lokal
+      const keys = Object.keys(groupedSoalList.value)
+      const currentIdx = keys.indexOf(activeKomponenNama.value)
+      if (currentIdx !== -1 && currentIdx < keys.length - 1) {
+        activeKomponenNama.value = keys[currentIdx + 1]
+        
+        // Buka soal pertama pada komponen baru
+        const arrBaru = groupedSoalList.value[activeKomponenNama.value].items
+        if (arrBaru && arrBaru.length > 0) {
+          openQuestion(arrBaru[0])
+        }
+      }
+    } else {
+      // Komponen terakhir, maka akhiri tryout
+      const res = await api.post(`/user/tryout/${tryoutId}/finish`)
+      
       localStorage.removeItem(STORAGE_KEY)
       localStorage.removeItem(WARNING_KEY)
       alertType.value = "success"
       alertMessage.value = "Selamat, tryout berhasil diakhiri"
       showAlertPopup.value = true
-    } else {
-      // Pindah ke komponen selanjutnya
-      await startCountdown()
-
-      if (soalListDalamKomponen.value.length > 0) {
-        openQuestion(soalListDalamKomponen.value[0])
-      }
     }
   } catch (e) {
     alertType.value = "error"
